@@ -15,7 +15,7 @@ public class TownOfWinchester {
     private static boolean isClient = false;
     /** true if server. */
     private static boolean isServer = false;
-
+    /** List of command-line options. */
     private static final List<String> options = new ArrayList<String>() {
         { add("-c"); add("--client"); add("-s"); add("--server"); }
     };
