@@ -1,5 +1,16 @@
+/*
+ * ChatServer.java
+ */
+package townofwinchester;
+
 import java.net.*;
 import java.io.*;
+
+/**
+ * ChatServer is the main class for the server part of the chat
+ *
+ * @see http://pirate.shu.edu/~wachsmut/Teaching/CSAS2214/Virtual/Lectures/chat-client-server.html
+ */
 
 public class ChatServer implements Runnable
 {  

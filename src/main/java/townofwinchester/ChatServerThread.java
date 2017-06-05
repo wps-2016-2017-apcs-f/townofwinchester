@@ -1,5 +1,18 @@
+/*
+ * ChatServerThread.java
+ */
+package townofwinchester;
+
 import java.net.*;
 import java.io.*;
+
+/**
+ * ChatServerThread is the thread for the server part of the chat
+ *
+ * @see http://pirate.shu.edu/~wachsmut/Teaching/CSAS2214/Virtual/Lectures/chat-client-server.html
+ * javadoc comments by:
+ * @author Roy H. Xing
+ */
 
 public class ChatServerThread extends Thread
 {  private ChatServer       server    = null;
@@ -14,6 +27,12 @@ public class ChatServerThread extends Thread
       socket = _socket;
       ID     = socket.getPort();
    }
+   
+   /**
+    * This is the method that sends the string message
+	* @param msg This is the string message to be sent
+	* @return Nothing.
+    */
    public void send(String msg)
    {   try
        {  streamOut.writeUTF(msg);
@@ -25,9 +44,22 @@ public class ChatServerThread extends Thread
           stop();
        }
    }
+   
+   /**
+    * This is the method that gets the ID number of the client
+	*
+	*@return int This is the ID of the client
+    */
    public int getID()
-   {  return ID;
+   {
+	   return ID;
    }
+   
+   /**
+    * This is the method that runs the thread
+	* 
+	* @return Nothing.
+    */
    public void run()
    {  System.out.println("Server Thread " + ID + " running.");
       while (true)
@@ -41,12 +73,24 @@ public class ChatServerThread extends Thread
          }
       }
    }
+   
+   /**
+    * This is the method that opens the I/O streams
+	* @exception IOException
+	* @return Nothing.
+    */
    public void open() throws IOException
    {  streamIn = new DataInputStream(new 
                         BufferedInputStream(socket.getInputStream()));
       streamOut = new DataOutputStream(new
                         BufferedOutputStream(socket.getOutputStream()));
    }
+   
+   /**
+    * This is the method that closes the socket and the I/O streams
+	* @exception IOException
+	* @return Nothing.
+    */
    public void close() throws IOException
    {  if (socket != null)    socket.close();
       if (streamIn != null)  streamIn.close();

@@ -1,5 +1,18 @@
+/*
+ * ChatClientThread.java
+ */
+package townofwinchester;
+
 import java.net.*;
 import java.io.*;
+
+/**
+ * ChatClientThread is the thread for the client part of the chat
+ *
+ * @see http://pirate.shu.edu/~wachsmut/Teaching/CSAS2214/Virtual/Lectures/chat-client-server.html
+ * javadoc comments by:
+ * @author Roy H. Xing
+ */
 
 public class ChatClientThread extends Thread
 {  private Socket           socket   = null;

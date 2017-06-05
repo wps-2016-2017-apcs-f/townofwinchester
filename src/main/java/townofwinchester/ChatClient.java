@@ -1,5 +1,16 @@
+/*
+ * ChatClient.java
+ */
+package townofwinchester;
+
 import java.net.*;
 import java.io.*;
+
+/**
+ * ChatClient is the main class for the client part of the chat
+ *
+ * @see http://pirate.shu.edu/~wachsmut/Teaching/CSAS2214/Virtual/Lectures/chat-client-server.html
+ */
 
 public class ChatClient implements Runnable
 {  private Socket socket              = null;
