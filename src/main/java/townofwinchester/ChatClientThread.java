@@ -4,6 +4,10 @@
 package townofwinchester;
 
 import java.net.*;
+
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import java.io.*;
 
 /**
@@ -11,6 +15,7 @@ import java.io.*;
  *
  * @see http://pirate.shu.edu/~wachsmut/Teaching/CSAS2214/Virtual/Lectures/chat-client-server.html
  * javadoc comments by:
+ * @author Emily Lee
  * @author Roy H. Xing
  */
 
@@ -18,6 +23,7 @@ public class ChatClientThread extends Thread
 {  private Socket           socket   = null;
    private ChatClient       client   = null;
    private DataInputStream  streamIn = null;
+   private static Logger logger = LogManager.getLogger("ChatClientThread");
 
    public ChatClientThread(ChatClient _client, Socket _socket)
    {  client   = _client;
@@ -30,7 +36,7 @@ public class ChatClientThread extends Thread
       {  streamIn  = new DataInputStream(socket.getInputStream());
       }
       catch(IOException ioe)
-      {  System.out.println("Error getting input stream: " + ioe);
+      {  logger.error("Error getting input stream: " + ioe);
          client.stop();
       }
    }
@@ -39,7 +45,7 @@ public class ChatClientThread extends Thread
       {  if (streamIn != null) streamIn.close();
       }
       catch(IOException ioe)
-      {  System.out.println("Error closing input stream: " + ioe);
+      {  logger.error("Error closing input stream: " + ioe);
       }
    }
    public void run()
@@ -48,7 +54,7 @@ public class ChatClientThread extends Thread
          {  client.handle(streamIn.readUTF());
          }
          catch(IOException ioe)
-         {  System.out.println("Listening error: " + ioe.getMessage());
+         {  logger.error("Listening error: " + ioe.getMessage());
             client.stop();
          }
       }
