@@ -5,15 +5,19 @@ package townofwinchester;
 
 import java.net.*;
 import java.io.*;
+import org.apache.logging.log4j.*;
 
 /**
  * ChatServer is the main class for the server part of the chat
  *
  * @see http://pirate.shu.edu/~wachsmut/Teaching/CSAS2214/Virtual/Lectures/chat-client-server.html
+ * @author Ethan Wong
+ * @author Roy Xing
  */
 
 public class ChatServer implements Runnable
-{  
+{
+   private static Logger logger = LogManager.getLogger("TOW");
    private ChatServerThread clients[] = new ChatServerThread[50];
    private ServerSocket server = null;
    private Thread       thread = null;
@@ -21,20 +25,20 @@ public class ChatServer implements Runnable
 
    public ChatServer(int port)
    {  try
-      {  System.out.println("Binding to port " + port + ", please wait  ...");
+      {  logger.info("Binding to port " + port + ", please wait  ...");
          server = new ServerSocket(port);  
-         System.out.println("Server started: " + server);
+         logger.info("Server started: " + server);
          start(); }
       catch(IOException ioe)
-      {  System.out.println("Can not bind to port " + port + ": " + ioe.getMessage()); }
+      {  logger.error("Can not bind to port " + port + ": " + ioe.getMessage()); }
    }
    public void run()
    {  while (thread != null)
       {  try
-         {  System.out.println("Waiting for a client ..."); 
+         {  logger.info("Waiting for a client ..."); 
             addThread(server.accept()); }
          catch(IOException ioe)
-         {  System.out.println("Server accept error: " + ioe); stop(); }
+         {  logger.error("Server accept error: " + ioe); stop(); }
       }
    }
    public void start()
@@ -67,7 +71,7 @@ public class ChatServer implements Runnable
    {  int pos = findClient(ID);
       if (pos >= 0)
       {  ChatServerThread toTerminate = clients[pos];
-         System.out.println("Removing client thread " + ID + " at " + pos);
+         logger.info("Removing client thread " + ID + " at " + pos);
          if (pos < clientCount-1)
             for (int i = pos+1; i < clientCount; i++)
                clients[i-1] = clients[i];
@@ -75,26 +79,26 @@ public class ChatServer implements Runnable
          try
          {  toTerminate.close(); }
          catch(IOException ioe)
-         {  System.out.println("Error closing thread: " + ioe); }
+         {  logger.error("Error closing thread: " + ioe); }
          toTerminate.stop(); }
    }
    private void addThread(Socket socket)
    {  if (clientCount < clients.length)
-      {  System.out.println("Client accepted: " + socket);
+      {  logger.info("Client accepted: " + socket);
          clients[clientCount] = new ChatServerThread(this, socket);
          try
          {  clients[clientCount].open(); 
             clients[clientCount].start();  
             clientCount++; }
          catch(IOException ioe)
-         {  System.out.println("Error opening thread: " + ioe); } }
+         {  logger.error("Error opening thread: " + ioe); } }
       else
-         System.out.println("Client refused: maximum " + clients.length + " reached.");
+         logger.info("Client refused: maximum " + clients.length + " reached.");
    }
    public static void main(String args[])
    {  ChatServer server = null;
       if (args.length != 1)
-         System.out.println("Usage: java ChatServer port");
+         logger.info("Usage: java ChatServer port");
       else
          server = new ChatServer(Integer.parseInt(args[0]));
    }
