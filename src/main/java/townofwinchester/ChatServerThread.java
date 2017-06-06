@@ -2,6 +2,7 @@
  * ChatServerThread.java
  */
 package townofwinchester;
+import org.apache.logging.log4j.*;
 
 import java.net.*;
 import java.io.*;
@@ -11,6 +12,8 @@ import java.io.*;
  *
  * @see http://pirate.shu.edu/~wachsmut/Teaching/CSAS2214/Virtual/Lectures/chat-client-server.html
  * javadoc comments by:
+ * @author Samuel Lee
+ * @author Lulu Tian
  * @author Roy H. Xing
  */
 
@@ -20,6 +23,8 @@ public class ChatServerThread extends Thread
    private int              ID        = -1;
    private DataInputStream  streamIn  =  null;
    private DataOutputStream streamOut = null;
+   
+   private static Logger logger = LogManager.getLogger("TownOfWinchester");
 
    public ChatServerThread(ChatServer _server, Socket _socket)
    {  super();
@@ -30,8 +35,8 @@ public class ChatServerThread extends Thread
    
    /**
     * This is the method that sends the string message
-	* @param msg This is the string message to be sent
-	* @return Nothing.
+ * @param msg This is the string message to be sent
+ * @return Nothing.
     */
    public void send(String msg)
    {   try
@@ -39,7 +44,7 @@ public class ChatServerThread extends Thread
           streamOut.flush();
        }
        catch(IOException ioe)
-       {  System.out.println(ID + " ERROR sending: " + ioe.getMessage());
+       {  logger.error(ID + " ERROR sending: " + ioe.getMessage());
           server.remove(ID);
           stop();
        }
@@ -47,27 +52,27 @@ public class ChatServerThread extends Thread
    
    /**
     * This is the method that gets the ID number of the client
-	*
-	*@return int This is the ID of the client
+ *
+ *@return int This is the ID of the client
     */
    public int getID()
    {
-	   return ID;
+    return ID;
    }
    
    /**
     * This is the method that runs the thread
-	* 
-	* @return Nothing.
+ * 
+ * @return Nothing.
     */
    public void run()
-   {  System.out.println("Server Thread " + ID + " running.");
+   {  logger.info("Server Thread " + ID + " running.");
       while (true)
       {  try
          {  server.handle(ID, streamIn.readUTF());
          }
          catch(IOException ioe)
-         {  System.out.println(ID + " ERROR reading: " + ioe.getMessage());
+         {  logger.error(ID + " ERROR reading: " + ioe.getMessage());
             server.remove(ID);
             stop();
          }
@@ -76,8 +81,8 @@ public class ChatServerThread extends Thread
    
    /**
     * This is the method that opens the I/O streams
-	* @exception IOException
-	* @return Nothing.
+ * @exception IOException
+ * @return Nothing.
     */
    public void open() throws IOException
    {  streamIn = new DataInputStream(new 
@@ -88,8 +93,8 @@ public class ChatServerThread extends Thread
    
    /**
     * This is the method that closes the socket and the I/O streams
-	* @exception IOException
-	* @return Nothing.
+ * @exception IOException
+ * @return Nothing.
     */
    public void close() throws IOException
    {  if (socket != null)    socket.close();
