@@ -8,7 +8,15 @@
   </Appenders>
   <Loggers>
     <!-- INFO logger -->
-    <Logger name="TownOfWinchester" level="info" additivity="false">
+    <Logger name="TOW" level="info" additivity="false">
+      <AppenderRef ref="Console"/>
+    </Logger>
+    <!-- INFO logger -->
+    <Logger name="TOW.client" level="trace" additivity="false">
+      <AppenderRef ref="Console"/>
+    </Logger>
+    <!-- INFO logger -->
+    <Logger name="TOW.server" level="trace" additivity="false">
       <AppenderRef ref="Console"/>
     </Logger>
     <Root level="error">
