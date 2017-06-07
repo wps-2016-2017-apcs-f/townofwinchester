@@ -27,7 +27,8 @@ public class CLO {
         for (String arg : args) {
             line.append(sep).append(arg); sep = " ";
         }
-        line.append("\"");
+        if (line.length() > 0)
+            line.append("\"");
         // Log command-line arguments.
         logger.debug("CLO: {}", line);
         // Create command-line options.
