@@ -12,8 +12,12 @@ import java.io.*;
  * @author David C. Petty
  */
 public class TownOfWinchester {
-    /** log4j logger */
-    private static Logger logger = LogManager.getLogger("TownOfWinchester");
+    /** LONG name of this project. */
+    public static final String LONG = "TownOfWinchester";
+    /** SHORT name of this project. */
+    public static final String SHORT = "TOW";
+    /** log4j logger. */
+    private static Logger logger = LogManager.getLogger(SHORT);
 
     /**
      * The SpaceInvader main method that initializes the entire game.
