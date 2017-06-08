@@ -11,6 +11,7 @@ import org.apache.logging.log4j.*;
  * ChatServer is the main class for the server part of the chat
  *
  * @see http://pirate.shu.edu/~wachsmut/Teaching/CSAS2214/Virtual/Lectures/chat-client-server.html
+ * @author Emily Lee
  * @author Ethan Wong
  * @author Roy Xing
  */
@@ -49,7 +50,14 @@ public class ChatServer implements Runnable
    }
    public void stop()
    {  if (thread != null)
-      {  thread.stop(); 
+      {  try {
+		Thread.sleep(5000);
+	} catch (InterruptedException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+		logger.error("Thread interruption failed");
+	}
+      	 thread.interrupt();
          thread = null;
       }
    }
@@ -80,7 +88,15 @@ public class ChatServer implements Runnable
          {  toTerminate.close(); }
          catch(IOException ioe)
          {  logger.error("Error closing thread: " + ioe); }
-         toTerminate.stop(); }
+         try {
+			Thread.sleep(5000);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			logger.error("Thread interruption failed");
+		}
+         toTerminate.interrupt();
+         }
    }
    private void addThread(Socket socket)
    {  if (clientCount < clients.length)

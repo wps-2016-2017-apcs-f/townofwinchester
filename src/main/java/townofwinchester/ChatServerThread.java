@@ -2,16 +2,18 @@
  * ChatServerThread.java
  */
 package townofwinchester;
-import org.apache.logging.log4j.*;
 
 import java.net.*;
 import java.io.*;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 /**
  * ChatServerThread is the thread for the server part of the chat
  *
  * @see http://pirate.shu.edu/~wachsmut/Teaching/CSAS2214/Virtual/Lectures/chat-client-server.html
  * javadoc comments by:
+ * @author Emily Lee
  * @author Samuel Lee
  * @author Lulu Tian
  * @author Roy H. Xing
@@ -46,7 +48,14 @@ public class ChatServerThread extends Thread
        catch(IOException ioe)
        {  logger.error(ID + " ERROR sending: " + ioe.getMessage());
           server.remove(ID);
-          stop();
+          try {
+			sleep(5000);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			logger.error("Thread interruption failed");
+		}
+          interrupt();
        }
    }
    
@@ -74,7 +83,14 @@ public class ChatServerThread extends Thread
          catch(IOException ioe)
          {  logger.error(ID + " ERROR reading: " + ioe.getMessage());
             server.remove(ID);
-            stop();
+            try {
+				sleep(5000);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+				logger.error("Thread interruption failed");
+			}
+            interrupt();
          }
       }
    }
