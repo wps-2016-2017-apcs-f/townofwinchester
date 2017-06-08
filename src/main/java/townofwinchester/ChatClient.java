@@ -8,12 +8,12 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import java.io.*;
 
-//console.readline() and stop() thread is depracted
 /**
  * ChatClient is the main class for the client part of the chat
  *
  * @see http://pirate.shu.edu/~wachsmut/Teaching/CSAS2214/Virtual/Lectures/chat-client-server.html
  *
+ * @author Emily Lee
  * @author Roy H. Xing
  */
 
@@ -84,7 +84,14 @@ public class ChatClient implements Runnable
       catch(IOException ioe){
 		  logger.info("Error, closing..."); }
 		  client.close();  
-          client.stop();
+          try {
+			Thread.sleep(5000);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			logger.error("Thread interruption failed");
+		}
+          client.interrupt();
    }
    public static void main(String args[])
    {  ChatClient client = null;
