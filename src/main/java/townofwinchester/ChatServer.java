@@ -12,6 +12,7 @@ import org.apache.logging.log4j.*;
  *
  * @see http://pirate.shu.edu/~wachsmut/Teaching/CSAS2214/Virtual/Lectures/chat-client-server.html
  * @author Emily Lee
+ * @author Lulu Tian
  * @author Ethan Wong
  * @author Roy Xing
  */
@@ -23,10 +24,12 @@ public class ChatServer implements Runnable
    private ServerSocket server = null;
    private Thread       thread = null;
    private int clientCount = 0;
+   private String name = null;
 
-   public ChatServer(int port)
+   public ChatServer(int port, String name)
    {  try
       {  logger.info("Binding to port " + port + ", please wait  ...");
+         this.name = name;
          server = new ServerSocket(port);  
          logger.info("Server started: " + server);
          start(); }
@@ -51,13 +54,13 @@ public class ChatServer implements Runnable
    public void stop()
    {  if (thread != null)
       {  try {
-		Thread.sleep(5000);
-	} catch (InterruptedException e) {
-		// TODO Auto-generated catch block
-		e.printStackTrace();
-		logger.error("Thread interruption failed");
-	}
-      	 thread.interrupt();
+  Thread.sleep(5000);
+ } catch (InterruptedException e) {
+  // TODO Auto-generated catch block
+  e.printStackTrace();
+  logger.error("Thread interruption failed");
+ }
+        thread.interrupt();
          thread = null;
       }
    }
@@ -73,7 +76,7 @@ public class ChatServer implements Runnable
          remove(ID); }
       else
          for (int i = 0; i < clientCount; i++)
-            clients[i].send(ID + ": " + input);   
+            clients[i].send(clients[i].getName() + ": " + input);   
    }
    public synchronized void remove(int ID)
    {  int pos = findClient(ID);
@@ -89,12 +92,12 @@ public class ChatServer implements Runnable
          catch(IOException ioe)
          {  logger.error("Error closing thread: " + ioe); }
          try {
-			Thread.sleep(5000);
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			logger.error("Thread interruption failed");
-		}
+   Thread.sleep(5000);
+  } catch (InterruptedException e) {
+   // TODO Auto-generated catch block
+   e.printStackTrace();
+   logger.error("Thread interruption failed");
+  }
          toTerminate.interrupt();
          }
    }
@@ -111,11 +114,19 @@ public class ChatServer implements Runnable
       else
          logger.info("Client refused: maximum " + clients.length + " reached.");
    }
+   public String getName()
+   {
+     return this.name;
+   }
+   public String getClientName(int ID)
+   {
+     return clients[findClient(ID)].getName();
+   }
    public static void main(String args[])
    {  ChatServer server = null;
       if (args.length != 1)
          logger.info("Usage: java ChatServer port");
       else
-         server = new ChatServer(Integer.parseInt(args[0]));
+        server = new ChatServer(Integer.parseInt(args[0]), args[1]);
    }
 }

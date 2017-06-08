@@ -27,15 +27,15 @@ public class TownOfWinchester {
     public static void main(String[] args) {
         logger.info("# TownOfWinchester");
         CLO clo = new CLO(args);
-		if(clo.isClient()){
-			new ChatClient(clo.getHost(), clo.getPort(), args[0]);
-			return;
-		}
-		if(clo.isServer()){
-			new ChatServer(clo.getPort());
-			return;
-		}
+  if(clo.isClient()){
+   new ChatClient(clo.getHost(), clo.getPort(), args[0]);
+   return;
+  }
+  if(clo.isServer()){
+   new ChatServer(clo.getPort(), args[0]);
+   return;
+  }
         logger.info("client = {}; server = {};", clo.isClient(), clo.isServer());
-		
+  
     }
 }

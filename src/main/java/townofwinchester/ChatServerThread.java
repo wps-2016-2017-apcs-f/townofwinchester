@@ -49,12 +49,12 @@ public class ChatServerThread extends Thread
        {  logger.error(ID + " ERROR sending: " + ioe.getMessage());
           server.remove(ID);
           try {
-			sleep(5000);
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			logger.error("Thread interruption failed");
-		}
+   sleep(5000);
+  } catch (InterruptedException e) {
+   // TODO Auto-generated catch block
+   e.printStackTrace();
+   logger.error("Thread interruption failed");
+  }
           interrupt();
        }
    }
@@ -84,12 +84,12 @@ public class ChatServerThread extends Thread
          {  logger.error(ID + " ERROR reading: " + ioe.getMessage());
             server.remove(ID);
             try {
-				sleep(5000);
-			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-				logger.error("Thread interruption failed");
-			}
+    sleep(5000);
+   } catch (InterruptedException e) {
+    // TODO Auto-generated catch block
+    e.printStackTrace();
+    logger.error("Thread interruption failed");
+   }
             interrupt();
          }
       }
