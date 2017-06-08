@@ -19,25 +19,25 @@ public class Messages
 {  
 	private boolean DayStatus, NightStatus;
 
-	public String Message(){
+	public Message(){
 
 	}
 
-	public String Header(){
+	public getHeader(){
 
 	}
 
-	public void Day(){
+	public void toDay(){
 		NightStatus = false;
 		DayStatus = true;
 	}
 
-	public void Night(){
+	public void toNight(){
 		DayStatus = false;
 		NightStatus = true;
 	}
 
-	public Time(){
+	public getTime(){
 		if DayStatus = true
 			logger.info("It's Day");
 		else
