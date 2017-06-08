@@ -83,6 +83,7 @@ public class CLO {
     public boolean isServer() {
         return !clo.hasOption("c") && clo.hasOption("s");
     }
+
     public int getPort() {
         assert isClient() != isServer() : "getPort(): is not client or server";
         if (isClient()) {

@@ -25,12 +25,16 @@ public class ChatClient implements Runnable
    private ChatClientThread client    = null;
    private static Logger logger = LogManager.getLogger("ChatClient");
    private volatile boolean runningThread = true;
+   private String name = null;
 
-   public ChatClient(String serverName, int serverPort){
+   public ChatClient(String serverName, int serverPort, String name){
 	  logger.info("Establishing connection. Please wait ...");
+	  this.name = name;
+	  
       try
       {  socket = new Socket(serverName, serverPort);
          logger.info("Connected: " + socket);
+         System.out.println("Welcome " + name + "! :^)");
          start();
       }
       catch(UnknownHostException uhe){
@@ -98,6 +102,6 @@ public class ChatClient implements Runnable
       if (args.length != 2)
 		 logger.info("You did not execute the program correctly, do this: Usage: java ChatClient host port");
       else
-         client = new ChatClient(args[0], Integer.parseInt(args[1]));
+         client = new ChatClient(args[0], Integer.parseInt(args[1]), args[2]);
    }
 }
