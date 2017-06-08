@@ -98,8 +98,8 @@ public class CLO {
     }
     public String getHost() {
         assert isServer() : "getHost(): is not server";
-        String[] args = clo.getOptionValues("s");
-        logger.debug("getHost(): -s {}", Arrays.asList(args));
+        String[] args = clo.getOptionValues("c");
+        logger.debug("getHost(): -c {}", Arrays.asList(args));
         return args[0];
     }
 }
