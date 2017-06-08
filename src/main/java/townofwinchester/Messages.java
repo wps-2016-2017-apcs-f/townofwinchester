@@ -17,5 +17,33 @@ import java.io.*;
 
 public class Messages
 {  
+	private boolean DayStatus, NightStatus;
+
+	public String Message(){
+
+	}
+
+	public String Header(){
+
+	}
+
+	public void Day(){
+		NightStatus = false;
+		DayStatus = true;
+	}
+
+	public void Night(){
+		DayStatus = false;
+		NightStatus = true;
+	}
+
+	public Time(){
+		if DayStatus = true
+			logger.info("It's Day");
+		else
+			logger.info("It's Night");
+
+	}
 
 }
+
