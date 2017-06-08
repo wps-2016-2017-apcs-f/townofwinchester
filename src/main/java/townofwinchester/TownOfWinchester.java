@@ -29,11 +29,11 @@ public class TownOfWinchester {
         CLO clo = new CLO(args);
 		if(clo.isClient()){
 			new ChatClient(clo.getHost(), clo.getPort());
-			System.exit(0);
+			return;
 		}
 		if(clo.isServer()){
 			new ChatServer(clo.getPort());
-			System.exit(0);
+			return;
 		}
         logger.info("client = {}; server = {};", clo.isClient(), clo.isServer());
 		
