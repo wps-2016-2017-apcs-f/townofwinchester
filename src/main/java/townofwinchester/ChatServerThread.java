@@ -2,10 +2,11 @@
  * ChatServerThread.java
  */
 package townofwinchester;
-import org.apache.logging.log4j.*;
 
 import java.net.*;
 import java.io.*;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 /**
  * ChatServerThread is the thread for the server part of the chat
