@@ -25,20 +25,28 @@ public class ChatClient implements Runnable
    private ChatClientThread client    = null;
    private static Logger logger = LogManager.getLogger("ChatClient");
    private volatile boolean runningThread = true;
+   private String name = null;
 
-   public ChatClient(String serverName, int serverPort){
-	  logger.info("Establishing connection. Please wait ...");
+   public ChatClient(String serverName, int serverPort, String name){
+   logger.info("Establishing connection. Please wait ...");
+   this.name = name;
+   
       try
       {  socket = new Socket(serverName, serverPort);
          logger.info("Connected: " + socket);
+         System.out.println("Welcome " + name + "! :^)");
          start();
       }
       catch(UnknownHostException uhe){
-		  logger.info("Host unknown: " + uhe.getMessage());
-	  }
+    logger.info("Host unknown: " + uhe.getMessage());
+   }
       catch(IOException ioe){
-		  logger.info("Unexpected exception: " + ioe.getMessage());
-	  }
+    logger.info("Unexpected exception: " + ioe.getMessage());
+   }
+   }
+   public String getName()
+   {
+     return this.name;
    }
    public void run()
    {  while (thread != null && runningThread)
@@ -48,7 +56,7 @@ public class ChatClient implements Runnable
          }
          catch(IOException ioe)
          {
-			logger.info("Sending error: " + ioe.getMessage());
+   logger.info("Sending error: " + ioe.getMessage());
             stop();
          }
       }
@@ -56,7 +64,7 @@ public class ChatClient implements Runnable
    public void handle(String msg)
    {  if (msg.equals(".bye"))
       {  
-		 logger.info("Good bye. Press RETURN to exit...");
+   logger.info("Good bye. Press RETURN to exit...");
          stop();
       }
       else
@@ -72,32 +80,32 @@ public class ChatClient implements Runnable
       }
    }
    public void stop(){
-	   if(thread != null){
-		   runningThread = false;
-		   //thread = null;
-		}
+    if(thread != null){
+     runningThread = false;
+     //thread = null;
+  }
        try{
-		 if (console   != null)  console.close();
+   if (console   != null)  console.close();
          if (streamOut != null)  streamOut.close();
          if (socket    != null)  socket.close();
       }
       catch(IOException ioe){
-		  logger.info("Error, closing..."); }
-		  client.close();  
+    logger.info("Error, closing..."); }
+    client.close();  
           try {
-			Thread.sleep(5000);
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			logger.error("Thread interruption failed");
-		}
+   Thread.sleep(5000);
+  } catch (InterruptedException e) {
+   // TODO Auto-generated catch block
+   e.printStackTrace();
+   logger.error("Thread interruption failed");
+  }
           client.interrupt();
    }
    public static void main(String args[])
    {  ChatClient client = null;
       if (args.length != 2)
-		 logger.info("You did not execute the program correctly, do this: Usage: java ChatClient host port");
+   logger.info("You did not execute the program correctly, do this: Usage: java ChatClient host port");
       else
-         client = new ChatClient(args[0], Integer.parseInt(args[1]));
+         client = new ChatClient(args[0], Integer.parseInt(args[1]), args[2]);
    }
 }
