@@ -76,7 +76,7 @@ public class ChatServer implements Runnable
          remove(ID); }
       else
          for (int i = 0; i < clientCount; i++)
-            clients[i].send(clients[i].getName() + ": " + input);   
+            clients[i].send(ID + ": " + input);   
    }
    public synchronized void remove(int ID)
    {  int pos = findClient(ID);
