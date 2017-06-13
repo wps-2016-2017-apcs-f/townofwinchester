@@ -8,10 +8,15 @@ import java.io.*;
 /**
  * Character.java is the default class that all players are assigned to at the beginning. 
  * @author Jeremy Hudges
+ * @author Emily Lee
+ * @author Samuel Lee
+ * @author Lulu Tian
+ * @author Ryan Tsai
  * @author Ethan Wong
  */
 
 public class Character{
+
 	public boolean MafiaStatus;
 	public String name
 
@@ -30,4 +35,5 @@ public class Character{
 	public String getName(){
 		logger.info(name + ioe);
 	}
+
 }
