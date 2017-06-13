@@ -3,7 +3,6 @@
  */
 package townofwinchester;
 import org.apache.logging.log4j.*;
-
 import java.net.*;
 import java.io.*;
 
@@ -17,7 +16,14 @@ import java.io.*;
 
 public class Messages
 {  
-	
+	public String message;
+	public Character god,sender;
+
+
+	public Message(Character from, String details){
+		sender = from;
+		message = details; 
+	}
 
 }
 
