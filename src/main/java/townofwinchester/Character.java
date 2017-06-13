@@ -16,7 +16,6 @@ import java.io.*;
  */
 
 public class Character{
-
 	public boolean MafiaStatus;
 	public String name
 
@@ -35,5 +34,3 @@ public class Character{
 	public String getName(){
 		logger.info(name + ioe);
 	}
-
-}
