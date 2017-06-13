@@ -41,6 +41,7 @@ public class ChatClientThread extends Thread
    public void close()
    {  try
       {  if (streamIn != null) streamIn.close();
+      	 if (client != null) client.stop();
       }
       catch(IOException ioe)
       {  logger.error("Error closing input stream: " + ioe);
