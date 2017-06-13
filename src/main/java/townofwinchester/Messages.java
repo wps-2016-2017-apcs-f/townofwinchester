@@ -20,7 +20,7 @@ public class Messages
 	public Character god,sender;
 
 
-	public Message(Character from, String details){
+	public Messages(Character from, String details){
 		sender = from;
 		message = details; 
 	}
