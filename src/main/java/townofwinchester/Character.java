@@ -34,3 +34,10 @@ public class Character{
 	public String getName(){
 		logger.info(name + ioe);
 	}
+
+	public Messages setReady(){
+		Messages status = new Message(name, "I'm ready to begin");
+	}
+}
+
+
