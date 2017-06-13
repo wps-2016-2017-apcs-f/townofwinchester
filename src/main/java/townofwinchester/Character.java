@@ -35,7 +35,7 @@ public class Character{
 		logger.info(name);
 	}
 
-	public Messages setReady(){
+	public void setReady(){
 		Messages status = new Messages(name, "I'm ready to begin");
 	}
 }
