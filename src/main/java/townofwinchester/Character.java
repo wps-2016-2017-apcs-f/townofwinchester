@@ -13,9 +13,10 @@ import java.io.*;
 
 public class Character{
 	public boolean MafiaStatus;
+	public String name
 
-	public Character(){
-
+	public Character(Str login){
+		name = login; 
 	}
 	
 	public void toMafia(){
@@ -24,5 +25,9 @@ public class Character{
 
 	public void toVillager(){
 		MafiaStatus = false; 
+	}
+
+	public String getName(){
+		logger.info(name + ioe);
 	}
 }
