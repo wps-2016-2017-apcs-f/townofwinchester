@@ -17,7 +17,7 @@ import java.io.*;
 
 public class Character{
 	public boolean MafiaStatus;
-	public String name
+	public String name;
 
 	public Character(Str login){
 		name = login; 
