@@ -19,7 +19,7 @@ public class Character{
 	public boolean MafiaStatus;
 	public String name;
 
-	public Character(Str login){
+	public Character(String login){
 		name = login; 
 	}
 	
