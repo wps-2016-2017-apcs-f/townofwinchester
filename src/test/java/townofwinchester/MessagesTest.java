@@ -13,9 +13,30 @@ import junit.framework.TestSuite;
  * @author Ethan Wong
  */
 
-public class MessagesTest
-{  
-	
+public class MessagesTest extends TestCase{
+	/**
+     * This creates the test case
+     *
+     * @param testName name of the test case
+     */
+	public Messages( String testName )
+    	{
+     	   super( testName );
+   		}
+   	/**
+     * @return the suite of tests being tested
+     */
+   	public static Test suite()
+    	{
+        	return new TestSuite( CharacterTest.class );
+    	}	
 
+    /**
+     * Rigorous Test :-)
+     */
+    public void testApp()
+    {
+        assertTrue( true );
+    }
 
 }
