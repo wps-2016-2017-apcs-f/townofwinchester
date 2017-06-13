@@ -32,13 +32,13 @@ public class Character{
 	}
 
 	public String getName(){
-		logger.info(name);
+		return name;
 	}
-/**
-*	public void setReady(){
-*		Messages status = new Messages(name, "I'm ready to begin");
-*	}
-*/
+
+	//public void setReady(){
+		//Messages status = new Messages(name, "I'm ready to begin");
+	//}
+
 }
 
 
