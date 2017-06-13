@@ -1,11 +1,26 @@
+/*
+ * MyFrame Class
+ */
+
+
+package townofwinchester;
+
 import java.awt.*;
 import javax.swing.*;
 import java.lang.*;
+//Following Imports are for Reading image files
+import java.io.File;
+import java.io.IOException;
+import java.awt.image.BufferedImage;
+import javax.imageio.ImageIO;
 
 /*
- * GUI. Does stuff.
- *
+ * GUI. Creates the user interface that the player will interact with.
+ * @author Andy Ark
  * @author David Mao
+ * @author Omar Grant
+ * @author Roman 
+ * @author James Spina
  *
  * TODO:
  * Replace villager with a role variable and timer with an actual timer, and make all the inputs work
@@ -114,11 +129,23 @@ public class MyFrame extends javax.swing.JFrame{
         pack();   //makes sure every layout and size we just defined gets applied before the stuff becomes visible
     }
 
-    public static void main(String args[]){
+    public static void main(String args[])throws IOException{
         EventQueue.invokeLater(new Runnable(){
             public void run(){
                 new MyFrame().setVisible(true);
             }
         });
+        int width = 933;    //width of the image
+        int height = 2000;   //height of the image
+        BufferedImage image = null;
+        File f = null;
+        try{
+          f = new File("C:\\Users\\gark\\townofwinchester\\src\\main\\resources\\Images\\imagebot.png");
+          image = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
+          image = ImageIO.read(f);
+          
+        }catch(IOException e){
+          System.out.println("Error: " + e);
+        }
     }
 }
