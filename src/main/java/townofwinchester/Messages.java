@@ -17,11 +17,20 @@ import java.io.*;
 public class Messages
 {  
 	public String message;
-	public Character god,sender;
+	public Character god,sender,receiver;
 
-
-	public Messages(Character from, String details) {
+	/** 
+    * Describes the Message that is being Snet
+    * 
+    * @from args is used to indicate the character that is sending the message. 
+    * 
+    * @to args is used to indicate the character that will eventually receive the message and is able to access it. 
+    *
+    * @details describes the content of the message
+    */
+	public Messages(Character from, Character to, String details) {
 		sender = from;
+		receiver = to; 
 		message = details; 
 	}
 
