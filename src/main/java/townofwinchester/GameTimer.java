@@ -37,21 +37,25 @@ public class GameTimer
   }
   
   /*
-   * Calling this method starts a 1-minute countdown. At the end of the countdown, the day boolean value switches
+   * Calling this method starts a countdown. At the end of the countdown, the day boolean value switches
    * to its opposite.
+   * 
+   * @param the delay (in seconds) before the timer expires
    */
-  public void startDayCountdown()
+  public void startDayCountdown(int seconds)
   {
-	  gameTimer.schedule(dayNightCycle, 60000); //1 minute for first day
+	  gameTimer.schedule(dayNightCycle, seconds * 100); 
   }
   
   /*
-   * Calling this method starts a 30-second countdown. At the end of the countdown, the discussable 
-   * boolean value switches to its opposite
+   * Calling this method starts a countdown. At the end of the countdown, the discussable 
+   * boolean value switches to its opposite.
+   * 
+   * @param the delay (in seconds) before the timer expires
    */
-  public void startDiscussionCountdown()
+  public void startDiscussionCountdown(int seconds)
   {
-	  gameTimer.schedule(discussionControl, 30000); //30 second discussion period
+	  gameTimer.schedule(discussionControl, seconds * 100); 
   }
 
 }
