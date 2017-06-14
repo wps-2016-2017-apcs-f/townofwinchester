@@ -12,6 +12,7 @@ import org.apache.logging.log4j.*;
  *
  * @see http://pirate.shu.edu/~wachsmut/Teaching/CSAS2214/Virtual/Lectures/chat-client-server.html
  * @author Emily Lee
+ * @author Samuel Lee
  * @author Lulu Tian
  * @author Ethan Wong
  * @author Roy Xing
@@ -36,6 +37,10 @@ public class ChatServer implements Runnable
       catch(IOException ioe)
       {  logger.error("Can not bind to port " + port + ": " + ioe.getMessage()); }
    }
+   /* Server opens the chat window.
+    * 
+    * @PostCondition Logger info displays that server is waiting for a client.
+    */
    public void run()
    {  while (thread != null)
       {  try
@@ -45,12 +50,19 @@ public class ChatServer implements Runnable
          {  logger.error("Server accept error: " + ioe); stop(); }
       }
    }
+   /* Initiates the thread.
+    * 
+    * @PostCondition Thread is initiated.
+    */
    public void start()
    {  if (thread == null)
       {  thread = new Thread(this); 
          thread.start();
       }
    }
+   /* Thread is stopped by interruption. 
+    * 
+    */
    public void stop()
    {  if (thread != null)
       {  try {
@@ -64,20 +76,39 @@ public class ChatServer implements Runnable
          thread = null;
       }
    }
+   /* Checks for client by comparing ID numbers.
+    * 
+    * @param ID the given ID from test classes
+    * @return location of client. Returns -1 if search for client unsuccessful.
+    */
    private int findClient(int ID)
    {  for (int i = 0; i < clientCount; i++)
          if (clients[i].getID() == ID)
             return i;
       return -1;
    }
+   /* Responds to client inputs.
+    * 
+    * @param ID client ID
+    * @param input the client input
+    * 
+    * @PostCondition sends a client's message or calls the remove method for the client
+    */
    public synchronized void handle(int ID, String input)
    {  if (input.equals(".bye"))
       {  clients[findClient(ID)].send(".bye");
-         remove(ID); }
+      remove(ID); 
+      }
       else
          for (int i = 0; i < clientCount; i++)
             clients[i].send(ID + ": " + input);   
    }
+   /* Removes the client.
+    * 
+    * @param ID client ID
+    * 
+    * @PostCondition removes client from chat.
+    */
    public synchronized void remove(int ID)
    {  int pos = findClient(ID);
       if (pos >= 0)
@@ -88,19 +119,29 @@ public class ChatServer implements Runnable
                clients[i-1] = clients[i];
          clientCount--;
          try
-         {  toTerminate.close(); }
+         {  toTerminate.close(); 
+         }
          catch(IOException ioe)
          {  logger.error("Error closing thread: " + ioe); }
-         try {
-   Thread.sleep(5000);
-  } catch (InterruptedException e) {
-   // TODO Auto-generated catch block
-   e.printStackTrace();
-   logger.error("Thread interruption failed");
-  }
+         try 
+         {
+        	Thread.sleep(5000);
+         } 
+         catch (InterruptedException e) 
+         {
+        	 // TODO Auto-generated catch block
+        	 e.printStackTrace();
+        	 logger.error("Thread interruption failed");
+         }
          toTerminate.interrupt();
          }
    }
+   /* Adds socket to the thread.
+    * 
+    * @param socket client socket
+    * 
+    * @PostCondition client thread is logged.
+    */
    private void addThread(Socket socket)
    {  if (clientCount < clients.length)
       {  logger.info("Client accepted: " + socket);
@@ -110,14 +151,25 @@ public class ChatServer implements Runnable
             clients[clientCount].start();  
             clientCount++; }
          catch(IOException ioe)
-         {  logger.error("Error opening thread: " + ioe); } }
+         {  logger.error("Error opening thread: " + ioe); } 
+      }
       else
          logger.info("Client refused: maximum " + clients.length + " reached.");
    }
+   /* 
+    * Accessor method for name.
+    */
    public String getName()
    {
      return this.name;
    }
+   /*
+    * Returns client name.
+    * 
+    * @param ID client ID
+    * 
+    * @return client name
+    */
    public String getClientName(int ID)
    {
      return clients[findClient(ID)].getName();
