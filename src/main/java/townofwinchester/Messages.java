@@ -13,17 +13,16 @@ import java.io.*;
  * @author Jeremy Hughes
  * @author Ethan Wong
  *
-*
-*public class Messages
-*{  
-*	public String message;
-*	public Character god,sender;
-*
-*
-*	public Messages(Character from, String details){
-*		sender = from;
-*		message = details; 
-*	}
-*
-*}
-*/
+ */
+public class Messages
+{  
+	public String message;
+	public Character god,sender;
+
+
+	public Messages(Character from, String details) {
+		sender = from;
+		message = details; 
+	}
+
+}
