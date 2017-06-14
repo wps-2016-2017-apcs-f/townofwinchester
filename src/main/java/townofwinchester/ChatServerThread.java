@@ -19,8 +19,8 @@ import org.apache.logging.log4j.Logger;
  * @author Roy H. Xing
  */
 
-public class ChatServerThread extends Thread
-{  private ChatServer       server    = null;
+public class ChatServerThread extends Thread {
+   private ChatServer       server    = null;
    private Socket           socket    = null;
    private int              ID        = -1;
    private DataInputStream  streamIn  =  null;
@@ -37,8 +37,8 @@ public class ChatServerThread extends Thread
    
    /**
     * This is the method that sends the string message
- * @param msg This is the string message to be sent
- * @return Nothing.
+    * @param msg This is the string message to be sent
+    * @return Nothing.
     */
    public void send(String msg)
    {   try
@@ -61,8 +61,8 @@ public class ChatServerThread extends Thread
    
    /**
     * This is the method that gets the ID number of the client
- *
- *@return int This is the ID of the client
+    *
+    *@return int This is the ID of the client
     */
    public int getID()
    {
@@ -71,8 +71,8 @@ public class ChatServerThread extends Thread
    
    /**
     * This is the method that runs the thread
- * 
- * @return Nothing.
+    * 
+    * @return Nothing.
     */
    public void run()
    {  logger.info("Server Thread " + ID + " running.");
@@ -97,8 +97,8 @@ public class ChatServerThread extends Thread
    
    /**
     * This is the method that opens the I/O streams
- * @exception IOException
- * @return Nothing.
+    * @exception IOException
+    * @return Nothing.
     */
    public void open() throws IOException
    {  streamIn = new DataInputStream(new 
@@ -109,8 +109,8 @@ public class ChatServerThread extends Thread
    
    /**
     * This is the method that closes the socket and the I/O streams
- * @exception IOException
- * @return Nothing.
+    * @exception IOException
+    * @return Nothing.
     */
    public void close() throws IOException
    {  if (socket != null)    socket.close();
