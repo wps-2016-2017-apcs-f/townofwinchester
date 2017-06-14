@@ -54,6 +54,7 @@ public class MyFrame extends javax.swing.JFrame{
       
         ClassLoader classLoader = getClass().getClassLoader();
         final File folder = new File(classLoader.getResource("images").getFile());
+        LogManager.getLogger(TownOfWinchester.SHORT).info(folder);
         File[] listOfFiles = folder.listFiles();
         for (File file : listOfFiles)
             LogManager.getLogger(TownOfWinchester.SHORT).info(file.getName());
