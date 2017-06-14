@@ -53,7 +53,7 @@ public class MyFrame extends javax.swing.JFrame{
         characterImages = new ArrayList<String>();
       
         ClassLoader classLoader = getClass().getClassLoader();
-        final File folder = new File(classLoader.getResource("Images").getFile());
+        final File folder = new File(classLoader.getResource("images").getFile());
         File[] listOfFiles = folder.listFiles();
         for (File file : listOfFiles)
             LogManager.getLogger(TownOfWinchester.SHORT).info(file.getName());
@@ -157,15 +157,18 @@ public class MyFrame extends javax.swing.JFrame{
         });
         int width = 933;    //width of the image
         int height = 2000;   //height of the image
+        
         BufferedImage image = null;
-        File f = null;
+        /*for (int i = 0; 
         try{
-          f = new File("C:\\Users\\gark\\townofwinchester\\src\\main\\resources\\Images\\imagebot.png");
+          ClassLoader classLoader = getClass().getClassLoader();
+          final File folder = new File(classLoader.getResource("images/" + characterImages.get(i)).getFile());
+          f = characterImages;
           image = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
           image = ImageIO.read(f);
           
         }catch(IOException e){
           System.out.println("Error: " + e);
-        }
+        }*/
     }
 }
