@@ -1,18 +1,32 @@
+/*
+ * MyFrame Class
+ */
+
+
 package townofwinchester;
 
 import java.awt.*;
 import javax.swing.*;
 import java.lang.*;
+//Following Imports are for Reading image files
+import java.io.File;
+import java.io.IOException;
+import java.awt.image.BufferedImage;
+import javax.imageio.ImageIO;
+
+import java.awt.*;
+import javax.swing.*;
 import java.io.*;
 import java.util.*;
 import org.apache.logging.log4j.*;
 
 /*
- * GUI. Does stuff.
- *
+ * GUI. Creates the user interface that the player will interact with.
+ * @author Andy Ark
  * @author David Mao
+ * @author Omar Grant
+ * @author Roman 
  * @author James Spina
- * @author Roman Wicky
  *
  * TODO:
  * Replace villager with a role variable and timer with an actual timer, and make all the inputs work
@@ -35,19 +49,14 @@ public class MyFrame extends javax.swing.JFrame{
     private final int people = 7;         //add # of people here?
     private final ArrayList<String> characterImages;       // List of all character images
 
-    public MyFrame(){
+    public MyFrame() {
         characterImages = new ArrayList<String>();
       
-        splitPane = new JSplitPane();
-
-        topPanel = new JPanel();         //top component
-        bottomPanel = new JPanel();      //bottom component
-        
         ClassLoader classLoader = getClass().getClassLoader();
         final File folder = new File(classLoader.getResource("Images").getFile());
         File[] listOfFiles = folder.listFiles();
         for (File file : listOfFiles)
-            LogManager.getLogger(TownOfWinchester.SHORT).info(file.getFileName());
+            LogManager.getLogger(TownOfWinchester.SHORT).info(file.getName());
 
         for (File file : listOfFiles) {
             if (file.isFile()) {
@@ -55,6 +64,11 @@ public class MyFrame extends javax.swing.JFrame{
             }
         }
         
+        splitPane = new JSplitPane();
+
+        topPanel = new JPanel();         //top component
+        bottomPanel = new JPanel();      //bottom component
+
         //text area
         scrollPane = new JScrollPane();
         textArea = new JTextArea();
@@ -135,12 +149,23 @@ public class MyFrame extends javax.swing.JFrame{
         pack();   //makes sure every layout and size we just defined gets applied before the stuff becomes visible
     }
 
-    public static void main(String args[]){
+    public static void main(String args[])throws IOException{
         EventQueue.invokeLater(new Runnable(){
             public void run(){
                 new MyFrame().setVisible(true);
             }
         });
+        int width = 933;    //width of the image
+        int height = 2000;   //height of the image
+        BufferedImage image = null;
+        File f = null;
+        try{
+          f = new File("C:\\Users\\gark\\townofwinchester\\src\\main\\resources\\Images\\imagebot.png");
+          image = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
+          image = ImageIO.read(f);
+          
+        }catch(IOException e){
+          System.out.println("Error: " + e);
+        }
     }
-    
 }

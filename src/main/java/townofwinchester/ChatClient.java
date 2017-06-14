@@ -9,7 +9,7 @@ import org.apache.logging.log4j.Logger;
 import java.io.*;
 
 /**
- * ChatClient is the main class for the client part of the chat
+ * ChatClient is the main class for the client part of the chat THIS IS A TEST DELETE THIS PART
  *
  * @see http://pirate.shu.edu/~wachsmut/Teaching/CSAS2214/Virtual/Lectures/chat-client-server.html
  *

@@ -16,18 +16,29 @@ import java.io.*;
  */
 
 public class Character{
- public boolean MafiaStatus;
- private String name;
+	public boolean MafiaStatus;
+	public String name;
 
- public Character(String name){
-   this.name = name;
- }
- 
- public void toMafia(){
-  MafiaStatus = true;
- }
+	public Character(String login){
+		name = login; 
+	}
+	
+	public void toMafia(){
+		MafiaStatus = true;
+	}
 
- public void toVillager(){
-  MafiaStatus = false; 
- }
+	public void toVillager(){
+		MafiaStatus = false; 
+	}
+
+	public String getName(){
+		return name;
+	}
+
+	//public void setReady(){
+		//Messages status = new Messages(name, "I'm ready to begin");
+	//}
+
 }
+
+

@@ -15,9 +15,5 @@ import junit.framework.TestSuite;
  * @author Ethan Wong
  */
 
-public class MessagesTest
-{  
- 
-
-
+public class MessagesTest{
 }
