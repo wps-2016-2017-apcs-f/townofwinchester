@@ -48,6 +48,7 @@ public class MyFrame extends javax.swing.JFrame{
     private final JLabel counter;        //amount of time left
     private final int people = 7;         //add # of people here?
     private final ArrayList<String> characterImages;       // List of all character images
+    private BufferedImage image;  // image variable used to hold images that will be drawn
 
     public MyFrame() {
         characterImages = new ArrayList<String>();
@@ -149,27 +150,31 @@ public class MyFrame extends javax.swing.JFrame{
 
         pack();   //makes sure every layout and size we just defined gets applied before the stuff becomes visible
     }
+   /* 
+    public void readImage(int i){              //reads the image from files
+          try{                                                                   //try catch block necessary for reading images
+          ClassLoader classLoader = getClass().getClassLoader();                 //idk what this code does
+          File f = new File(classLoader.getResource("images/" + characterImages.get(i)).getFile());  //pulls an image from characterImages list at location i
+          image = ImageIO.read(f);                                               //reads the previously pulled file
+          image = new BufferedImage(image.getWidth(), image.getHeight(), BufferedImage.TYPE_INT_ARGB); //constructor for BufferedImage class that sets image to the proper size and type
 
-    public static void main(String args[])throws IOException{
+        }catch(IOException e){   //catches the excpetion
+          System.out.println("Error: " + e);
+        }
+    }
+    
+    public void paintImage(Graphics g){
+        g.drawImage(image, c.gridx, c.gridy, null);
+    }
+*/
+    public static void main(String args[])throws IOException{  //IOException is for reading images
         EventQueue.invokeLater(new Runnable(){
             public void run(){
                 new MyFrame().setVisible(true);
             }
         });
-        int width = 933;    //width of the image
-        int height = 2000;   //height of the image
-        
-        BufferedImage image = null;
-        /*for (int i = 0; 
-        try{
-          ClassLoader classLoader = getClass().getClassLoader();
-          final File folder = new File(classLoader.getResource("images/" + characterImages.get(i)).getFile());
-          f = characterImages;
-          image = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
-          image = ImageIO.read(f);
-          
-        }catch(IOException e){
-          System.out.println("Error: " + e);
-        }*/
+
+
+
     }
 }
