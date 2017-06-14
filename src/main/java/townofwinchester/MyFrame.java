@@ -1,11 +1,18 @@
+package townofwinchester;
+
 import java.awt.*;
 import javax.swing.*;
 import java.lang.*;
+import java.io.*;
+import java.util.*;
+import org.apache.logging.log4j.*;
 
 /*
  * GUI. Does stuff.
  *
  * @author David Mao
+ * @author James Spina
+ * @author Roman Wicky
  *
  * TODO:
  * Replace villager with a role variable and timer with an actual timer, and make all the inputs work
@@ -26,14 +33,28 @@ public class MyFrame extends javax.swing.JFrame{
     private final JLabel role;           //role of player
     private final JLabel counter;        //amount of time left
     private final int people = 7;         //add # of people here?
+    private final ArrayList<String> characterImages;       // List of all character images
 
     public MyFrame(){
-
+        characterImages = new ArrayList<String>();
+      
         splitPane = new JSplitPane();
 
         topPanel = new JPanel();         //top component
         bottomPanel = new JPanel();      //bottom component
+        
+        ClassLoader classLoader = getClass().getClassLoader();
+        final File folder = new File(classLoader.getResource("Images").getFile());
+        File[] listOfFiles = folder.listFiles();
+        for (File file : listOfFiles)
+            LogManager.getLogger(TownOfWinchester.SHORT).info(file.getFileName());
 
+        for (File file : listOfFiles) {
+            if (file.isFile()) {
+                characterImages.add(file.getPath());
+            }
+        }
+        
         //text area
         scrollPane = new JScrollPane();
         textArea = new JTextArea();
@@ -121,4 +142,5 @@ public class MyFrame extends javax.swing.JFrame{
             }
         });
     }
+    
 }
