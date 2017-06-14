@@ -10,7 +10,7 @@ import java.io.*;
  * Messsages is the wrapper class for the messages that will be sent throughout the game
  *
  *
- * @author Jeremy Hudges
+ * @author Jeremy Hughes
  * @author Ethan Wong
  *
 *
