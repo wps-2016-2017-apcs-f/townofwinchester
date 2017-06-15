@@ -9,6 +9,7 @@ import java.awt.*;
 import javax.swing.*;
 import java.lang.*;
 //Following Imports are for Reading image files
+
 import java.io.File;
 import java.io.IOException;
 import java.awt.image.BufferedImage;
@@ -149,7 +150,7 @@ public class MyFrame extends javax.swing.JFrame{
 
         pack();   //makes sure every layout and size we just defined gets applied before the stuff becomes visible
     }
-   /* 
+    
     public void readImage(int i){              //reads the image from files
           try{                                                                   //try catch block necessary for reading images
           ClassLoader classLoader = getClass().getClassLoader();                 //idk what this code does
@@ -163,9 +164,9 @@ public class MyFrame extends javax.swing.JFrame{
     }
     
     public void paintImage(Graphics g){
-        g.drawImage(image, c.gridx, c.gridy, null);
+      g.drawImage(image, 50, 50, null);
     }
-*/
+
     public static void main(String args[])throws IOException{  //IOException is for reading images
         EventQueue.invokeLater(new Runnable(){
             public void run(){
