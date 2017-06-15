@@ -14,7 +14,9 @@ import java.io.*;
  * @see http://pirate.shu.edu/~wachsmut/Teaching/CSAS2214/Virtual/Lectures/chat-client-server.html
  *
  * @author Emily Lee
+ * @author Samuel Lee
  * @author Roy H. Xing
+ * 
  */
 
 public class ChatClient implements Runnable
