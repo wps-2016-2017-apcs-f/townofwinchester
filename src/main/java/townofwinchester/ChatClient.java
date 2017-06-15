@@ -51,7 +51,7 @@ public class ChatClient implements Runnable
    public void run()
    {  while (thread != null && runningThread)
       {  try
-         {  streamOut.writeUTF(console.readLine());
+         {  streamOut.writeUTF(name + ": " + console.readLine());
             streamOut.flush();
          }
          catch(IOException ioe)

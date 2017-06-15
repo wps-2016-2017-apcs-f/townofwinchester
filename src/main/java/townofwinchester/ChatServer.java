@@ -122,7 +122,7 @@ public class ChatServer implements Runnable
 	   }
 	   else {
 		   for (int i = 0; i < clientCount; i++)
-			   clients[i].send(ID + ": " + input);   
+			   clients[i].send(input);   
 	   }
    }
    
