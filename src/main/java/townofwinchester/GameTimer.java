@@ -1,78 +1,63 @@
 
 package townofwinchester;
-import javax.swing.Timer;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-
-
-
+import java.util.*;
 
 /*GameTimer.java
  * 
- * the in game timer that dictates day night cycle
+ * The in-game timer that dictates the day night cycle and the discussion periods
  * 
  * @author Adrian Stone
  * @author Tim Dalton
  */
 
-public class GameTimer implements ActionListener
+public class GameTimer 
 {
-  private int delay = 300000; // 5 mins for first day
-  private Timer gameTime;
-  private boolean isNight = false; 
+  private Timer gameTimer;
+  private DayNightCycle dayNightCycle = new DayNightCycle();
+  private DiscussionControl discussionControl = new DiscussionControl();
   
-  
-  
-  public GameTimer()
-  {
-    
-    gameTime = new Timer(delay, this);
-  
-  }
-  
-  
-  public Timer getGameTimer()
-  {
-    return gameTime;
-  }
-  
-  public int getDelay()
-  {
-    return delay;
-  }
-  
-  public boolean getIsNight()
-  {
-    return isNight;
-  }
-  
-  /*action performed when the timer hits zero. Changes the day 
-   * night cycle and resets the timer to either 5 or 10 minuets. 
+  /*
+   * An accessor method that allows other programs to access whether it is daytime or not.
    * 
-   * @param ActionEvent
-   *
-   * @return nothing
+   * @return The boolean value of day vs. night
    */
-  
-  public void actionPerformed (ActionEvent e)
+  public boolean getIsDay()
   {
-    if(isNight == false)
-    {
-      isNight = true;
-      delay = 300000; // 5 mins
-      gameTime.start();
-    }
-    if (isNight == true)
-    {
-      delay = 600000; // 10 mins
-      isNight = false;
-      gameTime.start();
-    }
+    return dayNightCycle.getIsDay();
   }
-    
-    
-   
-    
+  
+  /*
+   * An accessor method that allows other programs to access whether the players are allowed to talk or not.
+   * 
+   * @return The boolean value of whether the players are allowed to discuss or not.
+   */
+  public boolean getIsDiscussion()
+  {
+	  return discussionControl.getIsDiscussion();
+  }
+  
+  /*
+   * Calling this method starts a countdown. At the end of the countdown, the day boolean value switches
+   * to its opposite.
+   * 
+   * @param the delay (in seconds) before the timer expires
+   */
+  public void startDayCountdown(int seconds)
+  {
+	  gameTimer.schedule(dayNightCycle, seconds * 100); 
+  }
+  
+  /*
+   * Calling this method starts a countdown. At the end of the countdown, the discussable 
+   * boolean value switches to its opposite.
+   * 
+   * @param the delay (in seconds) before the timer expires
+   */
+  public void startDiscussionCountdown(int seconds)
+  {
+	  gameTimer.schedule(discussionControl, seconds * 100); 
+  }
+
 }
   
       
