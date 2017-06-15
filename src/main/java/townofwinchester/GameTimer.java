@@ -13,7 +13,7 @@ import java.util.Timer;
 
 public class GameTimer 
 {
-  private Timer gameTimer;
+  private Timer gameTimer = new Timer();
   private DayNightCycle dayNightCycle = new DayNightCycle();
   private DiscussionControl discussionControl = new DiscussionControl();
   private UpdateDayMinutes updateDayMinutes = new UpdateDayMinutes();
