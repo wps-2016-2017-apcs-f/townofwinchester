@@ -62,7 +62,7 @@ public class ChatClient implements Runnable
       }
    }
    public void handle(String msg)
-   {  if (msg.equals(".bye"))
+   {  if (msg.contains(".bye"))
       {  
    logger.info("Good bye. Press RETURN to exit...");
          stop();
