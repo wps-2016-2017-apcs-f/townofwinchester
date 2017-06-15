@@ -56,7 +56,6 @@ public class MyFrame extends javax.swing.JFrame{
       
         ClassLoader classLoader = getClass().getClassLoader();
         final File folder = new File(classLoader.getResource("images").getFile());
-        LogManager.getLogger(TownOfWinchester.SHORT).info(folder);
         File[] listOfFiles = folder.listFiles();
         for (File file : listOfFiles)
             LogManager.getLogger(TownOfWinchester.SHORT).info(file.getName());
@@ -159,13 +158,14 @@ public class MyFrame extends javax.swing.JFrame{
           image = ImageIO.read(f);                                               //reads the previously pulled file
           image = new BufferedImage(image.getWidth(), image.getHeight(), BufferedImage.TYPE_INT_ARGB); //constructor for BufferedImage class that sets image to the proper size and type
 
+
         }catch(IOException e){   //catches the excpetion
           System.out.println("Error: " + e);
         }
     }
     
     public void paintImage(Graphics g){
-      g.drawImage(image, 50, 50, null);
+      g.drawImage(image, 50, 50, null);               //Numbers temporary until I figure out how to access c.gridx/y for the temp Pictures
     }
 
     public static void main(String args[])throws IOException{  //IOException is for reading images
@@ -174,8 +174,11 @@ public class MyFrame extends javax.swing.JFrame{
                 new MyFrame().setVisible(true);
             }
         });
-
-
-
+        
+/*        for (int i = 0; i < characterImages.size(); i++){             //Loop that draws all of the images in characterImages ArrayList
+          readImage(i);
+          paintImage();
+        } */
+        
     }
 }
