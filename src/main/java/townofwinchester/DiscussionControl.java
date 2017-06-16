@@ -2,7 +2,7 @@ package townofwinchester;
 
 import java.util.TimerTask;
 
-/*GameTimer.java
+/*DiscussionControl.java
  * 
  * The Timer Task that dictates whether the players can discuss or not
  * 
@@ -13,6 +13,12 @@ public class DiscussionControl extends TimerTask
 {
 	private boolean isDiscussion = false;
 	
+	/*
+	 * An accessor method that allows the discussable
+	 * boolean valueto be accessed from the main timer class
+	 * 
+	 * @return the discussable boolean value
+	 */
 	public boolean getIsDiscussion()
 	{
 		return isDiscussion;
