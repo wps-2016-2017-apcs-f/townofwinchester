@@ -18,7 +18,7 @@ public class TownOfWinchester {
     public static final String SHORT = "TOW";
     /** log4j logger. */
     private static Logger logger = LogManager.getLogger(SHORT);
-
+    
     /**
      * The SpaceInvader main method that initializes the entire game.
      *
@@ -26,17 +26,17 @@ public class TownOfWinchester {
      */
     public static void main(String[] args) {
         logger.info("# TownOfWinchester");
-        //new MyFrame();
+        new MyFrame();
         CLO clo = new CLO(args);
-  if(clo.isClient()){
-   new ChatClient(clo.getHost(), clo.getPort(), args[0]);
-   return;
-  }
-  if(clo.isServer()){
-   new ChatServer(clo.getPort(), args[0]);
-   return;
-  }
+        if(clo.isClient()){
+            new ChatClient(clo.getHost(), clo.getPort(), args[0]);
+            return;
+        }
+        if(clo.isServer()){
+            new ChatServer(clo.getPort(), args[0]);
+            return;
+        }
         logger.info("client = {}; server = {};", clo.isClient(), clo.isServer());
-  
+        
     }
 }

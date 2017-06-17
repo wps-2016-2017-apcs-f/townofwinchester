@@ -2,7 +2,6 @@
  * MyFrame Class
  */
 
-
 package townofwinchester;
 
 import java.awt.*;
@@ -17,6 +16,9 @@ import javax.imageio.ImageIO;
 import java.awt.*;
 import javax.swing.*;
 import java.io.*;
+import java.net.*;
+import java.nio.file.*;
+import java.nio.file.attribute.*;
 import java.util.*;
 import org.apache.logging.log4j.*;
 
@@ -36,36 +38,23 @@ import org.apache.logging.log4j.*;
 public class MyFrame extends javax.swing.JFrame{
 
     // these are the components we need.
-    private final JSplitPane splitPane;  // split the window in top and bottom
-    private final JPanel topPanel;       // container panel for the top
-    private final JPanel bottomPanel;    // container panel for the bottom
-    private final JScrollPane scrollPane; // makes the text scrollable
-    private final JTextArea textArea;     // the text
-    private final JPanel inputPanel;      // under the text a container for all the input elements
-    private final JTextField textField;   // a textField for the text the user inputs
-    private final JButton button;         // and a "send" button
-    private final JLabel role;           //role of player
-    private final JLabel counter;        //amount of time left
-    private final int people = 7;         //add # of people here?
-    private final ArrayList<String> characterImages;       // List of all character images
-    private BufferedImage image;  // image variable used to hold images that will be drawn
+    private final JSplitPane splitPane; // split the window in top and bottom
+    private final JPanel topPanel;      // container panel for the top
+    private final JPanel bottomPanel;   // container panel for the bottom
+    private final JScrollPane scrollPane;   // makes the text scrollable
+    private final JTextArea textArea;   // the text
+    private final JPanel inputPanel;    // under the text a container for all the input elements
+    private final JTextField textField; // a textField for the text the user inputs
+    private final JButton button;       // and a "send" button
+    private final JLabel role;          // role of player
+    private final JLabel counter;       //amount of time left
+    private final int people = 7;       //add # of people here?
+    private final java.util.List<Path> imagePaths;  // List of all character images
+    private BufferedImage image;    // image variable used to hold images that will be drawn
 
     public MyFrame() {
-        characterImages = new ArrayList<String>();
-      
-        ClassLoader classLoader = getClass().getClassLoader();
-        final File folder = new File(classLoader.getResource("images").getFile());
-        LogManager.getLogger(TownOfWinchester.SHORT).info(folder);
-        File[] listOfFiles = folder.listFiles();
-        for (File file : listOfFiles)
-            LogManager.getLogger(TownOfWinchester.SHORT).info(file.getName());
+        imagePaths = getPaths("/images");
 
-        for (File file : listOfFiles) {
-            if (file.isFile()) {
-                characterImages.add(file.getPath());
-            }
-        }
-        
         splitPane = new JSplitPane();
 
         topPanel = new JPanel();         //top component
@@ -164,7 +153,7 @@ public class MyFrame extends javax.swing.JFrame{
     }
     
     public void paintImage(Graphics g){
-        g.drawImage(image, c.gridx, c.gridy, null);
+      g.drawImage(image, c.gridx, c.gridy, null);
     }
 */
     public static void main(String args[])throws IOException{  //IOException is for reading images
@@ -173,8 +162,30 @@ public class MyFrame extends javax.swing.JFrame{
                 new MyFrame().setVisible(true);
             }
         });
+    }
 
-
-
+    private java.util.List<Path> getPaths(String directory) {
+        String message = String.format("getPaths(\"%s\") =", directory);
+        LogManager.getLogger(TownOfWinchester.SHORT).info(message);
+        final java.util.List<Path> paths = new ArrayList<Path>();
+        try {
+            URI uri = MyFrame.class.getResource("/images").toURI();
+            try (FileSystem fileSystem = (uri.getScheme().equals("jar") ? FileSystems.newFileSystem(uri, Collections.<String, Object>emptyMap()) : null)) {
+                Path myPath = Paths.get(uri);
+                Files.walkFileTree(myPath, new SimpleFileVisitor<Path>() { 
+                    @Override
+                    public FileVisitResult visitFile(Path file, BasicFileAttributes attrs) throws IOException {
+                        paths.add(file);
+                        return FileVisitResult.CONTINUE;
+                    }
+                });
+            }
+        } catch (URISyntaxException | IOException e) {
+            e.printStackTrace();
+            System.exit(5); // I/O error
+        }
+        message = String.format("%s.size() = %s", paths, paths.size());
+        LogManager.getLogger(TownOfWinchester.SHORT).info(message);
+        return paths;
     }
 }
