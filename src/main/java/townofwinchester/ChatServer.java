@@ -25,10 +25,10 @@ public class ChatServer implements Runnable
    private ServerSocket server = null;
    private Socket socket = null;
    private BufferedReader readKey = new BufferedReader(new InputStreamReader(System.in));
-   private OutputStream outStream = null;
-   private PrintWriter pwrite = new PrintWriter(outStream, true);
-   private InputStream inStream = null;
-   private BufferedReader receiveRead = new BufferedReader(new InputStreamReader(inStream));
+   //private OutputStream outStream = null;
+   //private PrintWriter pwrite = new PrintWriter(outStream, true);
+   //private InputStream inStream = null;
+   //private BufferedReader receiveRead = new BufferedReader(new InputStreamReader(inStream));
    private Thread thread = null;
    private int clientCount = 0;
    private String name = null;
@@ -50,18 +50,21 @@ public class ChatServer implements Runnable
 	   catch(IOException ioe){
 		   logger.error("socket did not work");
 	   }
+	   /*
 	   try{
 		   OutputStream outStream = socket.getOutputStream();
 	   }
 	   catch(IOException ioe){
 		   logger.error("output stream did not work");
 	   }
+	   
 	   try{
 		   InputStream inStream = socket.getInputStream();
 	   }
 	   catch(IOException ioe){
 		   logger.error("input stream did not work");
 	   }
+	   */
    }
    
    /** 
@@ -77,12 +80,12 @@ public class ChatServer implements Runnable
 		   try {
 			   //logger.info("Waiting for a client ...");
 			   addThread(server.accept());
-			   if((receivedMsg = receiveRead.readLine()) != null){
+			   /*if((receivedMsg = receiveRead.readLine()) != null){
 				   logger.info(receivedMsg);
-			   }
+			   }*/
 			   sendMsg = readKey.readLine();
-			   pwrite.println(sendMsg);
-			   pwrite.flush();
+			   //pwrite.println(sendMsg);
+			   //pwrite.flush();
 			}
 		   catch(IOException ioe) {  
 			   logger.error("Server accept error: " + ioe); stop(); 
