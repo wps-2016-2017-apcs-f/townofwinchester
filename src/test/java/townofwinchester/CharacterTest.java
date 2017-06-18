@@ -9,7 +9,7 @@ import junit.framework.TestSuite;
 
 /**
  * Character.java is the default class that all players are assigned to at the beginning. 
- * @author Jeremy Hudges
+ * @author Jeremy Hughes
  * @author Ethan Wong
  */
 
