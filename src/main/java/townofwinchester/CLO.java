@@ -98,7 +98,7 @@ public class CLO {
         }
     }
     public String getHost() {
-        assert isServer() : "getHost(): is not server";
+        assert isClient() : "getHost(): is not client";
         String[] args = clo.getOptionValues("c");
         logger.debug("getHost(): -c {}", Arrays.asList(args));
         return args[0];
