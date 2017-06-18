@@ -177,8 +177,8 @@ public class MyFrame extends javax.swing.JFrame{
     private java.util.List<Path> getPaths(String directory) {
         assert directory != null && directory.length() > 0 && directory.charAt(0) == '/'
             : String.format("\"%s\" is null, or empty, or doesn't start with '/'", directory);
-        String message = String.format("getPaths(\"%s\") =", directory);
-        LogManager.getLogger(TownOfWinchester.SHORT).info(message);
+        LogManager.getLogger(TownOfWinchester.SHORT)
+            .info("getPaths(\"{}\") =", directory);
         final java.util.List<Path> paths = new ArrayList<Path>();
         try {
             URI uri = MyFrame.class.getResource(directory).toURI();
@@ -196,8 +196,8 @@ public class MyFrame extends javax.swing.JFrame{
             e.printStackTrace();
             System.exit(5); // I/O error
         }
-        message = String.format("%s.size() = %s", paths, paths.size());
-        LogManager.getLogger(TownOfWinchester.SHORT).info(message);
+        LogManager.getLogger(TownOfWinchester.SHORT)
+            .info("{}.size() ({} files)", paths, paths.size());
         return paths;
     }
 }
