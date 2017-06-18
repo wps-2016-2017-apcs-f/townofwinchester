@@ -8,6 +8,7 @@ import java.awt.*;
 import javax.swing.*;
 import java.lang.*;
 //Following Imports are for Reading image files
+
 import java.io.File;
 import java.io.IOException;
 import java.awt.image.BufferedImage;
@@ -53,7 +54,7 @@ public class MyFrame extends javax.swing.JFrame{
     private BufferedImage image;    // image variable used to hold images that will be drawn
 
     public MyFrame() {
-        imagePaths = getPaths("/images");
+        imagePaths = getPaths("/images");// read paths to image files
 
         splitPane = new JSplitPane();
 
@@ -139,7 +140,7 @@ public class MyFrame extends javax.swing.JFrame{
 
         pack();   //makes sure every layout and size we just defined gets applied before the stuff becomes visible
     }
-   /* 
+/*    
     public void readImage(int i){              //reads the image from files
           try{                                                                   //try catch block necessary for reading images
           ClassLoader classLoader = getClass().getClassLoader();                 //idk what this code does
@@ -147,15 +148,16 @@ public class MyFrame extends javax.swing.JFrame{
           image = ImageIO.read(f);                                               //reads the previously pulled file
           image = new BufferedImage(image.getWidth(), image.getHeight(), BufferedImage.TYPE_INT_ARGB); //constructor for BufferedImage class that sets image to the proper size and type
 
+
         }catch(IOException e){   //catches the excpetion
           System.out.println("Error: " + e);
         }
     }
-    
+*/    
     public void paintImage(Graphics g){
-      g.drawImage(image, c.gridx, c.gridy, null);
+      g.drawImage(image, 50, 50, null);               //Numbers temporary until I figure out how to access c.gridx/y for the temp Pictures
     }
-*/
+
     public static void main(String args[])throws IOException{  //IOException is for reading images
         EventQueue.invokeLater(new Runnable(){
             public void run(){
@@ -164,12 +166,22 @@ public class MyFrame extends javax.swing.JFrame{
         });
     }
 
+    /**
+     * Read all file paths from directory and return them as a {@link java.util.List}.
+     * Precondition: directory is not null, not empty, and must start with '/'.
+     *
+     * @param directory directory within resources directory
+     * @return {@link java.util.List} of {@link Path}s.
+     * @see <a href="https://stackoverflow.com/questions/1429172/how-do-i-list-the-files-inside-a-jar-file/39974405#39974405" target="_blank">https://stackoverflow.com/questions/1429172/</a>
+     */
     private java.util.List<Path> getPaths(String directory) {
+        assert directory != null && directory.length() > 0 && directory.charAt(0) == '/'
+            : String.format("\"%s\" is null, or empty, or doesn't start with '/'", directory);
         String message = String.format("getPaths(\"%s\") =", directory);
         LogManager.getLogger(TownOfWinchester.SHORT).info(message);
         final java.util.List<Path> paths = new ArrayList<Path>();
         try {
-            URI uri = MyFrame.class.getResource("/images").toURI();
+            URI uri = MyFrame.class.getResource(directory).toURI();
             try (FileSystem fileSystem = (uri.getScheme().equals("jar") ? FileSystems.newFileSystem(uri, Collections.<String, Object>emptyMap()) : null)) {
                 Path myPath = Paths.get(uri);
                 Files.walkFileTree(myPath, new SimpleFileVisitor<Path>() { 

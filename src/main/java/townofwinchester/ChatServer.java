@@ -23,7 +23,13 @@ public class ChatServer implements Runnable
    private static Logger logger = LogManager.getLogger("TOW");
    private ChatServerThread clients[] = new ChatServerThread[50];
    private ServerSocket server = null;
-   private Thread       thread = null;
+   private Socket socket = null;
+   private BufferedReader readKey = new BufferedReader(new InputStreamReader(System.in));
+   private OutputStream outStream = null;
+   private PrintWriter pwrite = new PrintWriter(outStream, true);
+   private InputStream inStream = null;
+   private BufferedReader receiveRead = new BufferedReader(new InputStreamReader(inStream));
+   private Thread thread = null;
    private int clientCount = 0;
    private String name = null;
 
@@ -38,6 +44,24 @@ public class ChatServer implements Runnable
 	   catch(IOException ioe) {  
 		   logger.error("Can not bind to port " + port + ": " + ioe.getMessage()); 
 	   }
+	   try{
+		   Socket socket = server.accept();
+	   }
+	   catch(IOException ioe){
+		   logger.error("socket did not work");
+	   }
+	   try{
+		   OutputStream outStream = socket.getOutputStream();
+	   }
+	   catch(IOException ioe){
+		   logger.error("output stream did not work");
+	   }
+	   try{
+		   InputStream inStream = socket.getInputStream();
+	   }
+	   catch(IOException ioe){
+		   logger.error("input stream did not work");
+	   }
    }
    
    /** 
@@ -48,10 +72,18 @@ public class ChatServer implements Runnable
     * @PostCondition Logger info displays that server is waiting for a client.
     */
    public void run() {
+	   String receivedMsg, sendMsg;
 	   while (thread != null) {
 		   try {
-			   logger.info("Waiting for a client ..."); 
-			   addThread(server.accept()); }
+			   //logger.info("Waiting for a client ...");
+			   addThread(server.accept());
+			   if((receivedMsg = receiveRead.readLine()) != null){
+				   logger.info(receivedMsg);
+			   }
+			   sendMsg = readKey.readLine();
+			   pwrite.println(sendMsg);
+			   pwrite.flush();
+			}
 		   catch(IOException ioe) {  
 			   logger.error("Server accept error: " + ioe); stop(); 
 		   }
@@ -122,7 +154,7 @@ public class ChatServer implements Runnable
 	   }
 	   else {
 		   for (int i = 0; i < clientCount; i++)
-			   clients[i].send(ID + ": " + input);   
+			   clients[i].send(input);   
 	   }
    }
    

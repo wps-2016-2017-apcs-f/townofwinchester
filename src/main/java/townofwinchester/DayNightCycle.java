@@ -13,6 +13,12 @@ public class DayNightCycle extends TimerTask
 {
 	private boolean isDay = true;
 	
+	/*
+	 * An accessor method that allows the day boolean value
+	 * to be accessed from the main timer class
+	 * 
+	 * @return the day boolean value
+	 */
 	public boolean getIsDay()
 	{
 		return isDay;

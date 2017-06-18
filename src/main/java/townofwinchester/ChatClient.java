@@ -14,7 +14,9 @@ import java.io.*;
  * @see http://pirate.shu.edu/~wachsmut/Teaching/CSAS2214/Virtual/Lectures/chat-client-server.html
  *
  * @author Emily Lee
+ * @author Samuel Lee
  * @author Roy H. Xing
+ * 
  */
 
 public class ChatClient implements Runnable
@@ -51,7 +53,7 @@ public class ChatClient implements Runnable
    public void run()
    {  while (thread != null && runningThread)
       {  try
-         {  streamOut.writeUTF(console.readLine());
+         {  streamOut.writeUTF(name + ": " + console.readLine());
             streamOut.flush();
          }
          catch(IOException ioe)
@@ -62,7 +64,7 @@ public class ChatClient implements Runnable
       }
    }
    public void handle(String msg)
-   {  if (msg.equals(".bye"))
+   {  if (msg.contains(".bye"))
       {  
    logger.info("Good bye. Press RETURN to exit...");
          stop();

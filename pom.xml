@@ -11,6 +11,7 @@
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <github.global.server>github</github.global.server>
+    <additionalparam>-Xdoclint:none</additionalparam> <!-- for javadoc 8 -->
     <my.java.mainClass>townofwinchester.TownOfWinchester</my.java.mainClass>
   </properties>
 
