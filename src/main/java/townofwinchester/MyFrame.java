@@ -141,21 +141,21 @@ public class MyFrame extends javax.swing.JFrame{
         pack();   //makes sure every layout and size we just defined gets applied before the stuff becomes visible
     }
 /*    
-    public void readImage(int i){              //reads the image from files
-          try{                                                                   //try catch block necessary for reading images
-          ClassLoader classLoader = getClass().getClassLoader();                 //idk what this code does
-          File f = new File(classLoader.getResource("images/" + characterImages.get(i)).getFile());  //pulls an image from characterImages list at location i
-          image = ImageIO.read(f);                                               //reads the previously pulled file
-          image = new BufferedImage(image.getWidth(), image.getHeight(), BufferedImage.TYPE_INT_ARGB); //constructor for BufferedImage class that sets image to the proper size and type
+    public void readImage(int i){                                                                       //reads the image from files
+        try{                                                                                            //try catch block necessary for reading images
+        ClassLoader classLoader = getClass().getClassLoader();                                          //idk what this code does
+        File f = new File(classLoader.getResource("images/" + characterImages.get(i)).getFile());       //pulls an image from characterImages list at location i
+        image = ImageIO.read(f);                                                                        //reads the previously pulled file
+        image = new BufferedImage(image.getWidth(), image.getHeight(), BufferedImage.TYPE_INT_ARGB);    //constructor for BufferedImage class that sets image to the proper size and type
 
 
         }catch(IOException e){   //catches the excpetion
-          System.out.println("Error: " + e);
+             System.out.println("Error: " + e);
         }
     }
 */    
     public void paintImage(Graphics g){
-      g.drawImage(image, 50, 50, null);               //Numbers temporary until I figure out how to access c.gridx/y for the temp Pictures
+        g.drawImage(image, 50, 50, null);               //Numbers temporary until I figure out how to access c.gridx/y for the temp Pictures
     }
 
     public static void main(String args[])throws IOException{  //IOException is for reading images
