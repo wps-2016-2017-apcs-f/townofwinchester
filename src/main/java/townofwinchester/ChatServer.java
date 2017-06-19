@@ -6,6 +6,7 @@ package townofwinchester;
 import java.net.*;
 import java.io.*;
 import org.apache.logging.log4j.*;
+import java.util.Scanner;
 
 /**
  * ChatServer is the main class for the server part of the chat
@@ -24,14 +25,18 @@ public class ChatServer implements Runnable
    private ChatServerThread clients[] = new ChatServerThread[50];
    private ServerSocket server = null;
    private Socket socket = null;
-   private BufferedReader readKey = new BufferedReader(new InputStreamReader(System.in));
+   private BufferedReader console = null;
+   //private BufferedReader fromClient = null;
    private OutputStream outStream = null;
-   private PrintWriter pwrite = new PrintWriter(outStream, true);
-   private InputStream inStream = null;
-   private BufferedReader receiveRead = new BufferedReader(new InputStreamReader(inStream));
+   private PrintWriter toClient = null;
+   //private InputStream inStream = null;
+   //private BufferedReader receiveRead = new BufferedReader(new InputStreamReader(inStream));
    private Thread thread = null;
    private int clientCount = 0;
    private String name = null;
+   private boolean gameStart = false;
+   private int gameStartCount = 0;
+   private ChatClient serverChat = null;
 
    public ChatServer(int port, String name) {  
 	   try {
@@ -50,18 +55,6 @@ public class ChatServer implements Runnable
 	   catch(IOException ioe){
 		   logger.error("socket did not work");
 	   }
-	   try{
-		   OutputStream outStream = socket.getOutputStream();
-	   }
-	   catch(IOException ioe){
-		   logger.error("output stream did not work");
-	   }
-	   try{
-		   InputStream inStream = socket.getInputStream();
-	   }
-	   catch(IOException ioe){
-		   logger.error("input stream did not work");
-	   }
    }
    
    /** 
@@ -72,17 +65,24 @@ public class ChatServer implements Runnable
     * @PostCondition Logger info displays that server is waiting for a client.
     */
    public void run() {
-	   String receivedMsg, sendMsg;
+	   String line;
 	   while (thread != null) {
 		   try {
-			   //logger.info("Waiting for a client ...");
-			   addThread(server.accept());
-			   if((receivedMsg = receiveRead.readLine()) != null){
-				   logger.info(receivedMsg);
+			   //talkToClients(console.readLine());
+			   if(gameStart == false){
+				logger.info("Waiting for a client ...");
+				addThread(server.accept());
 			   }
-			   sendMsg = readKey.readLine();
-			   pwrite.println(sendMsg);
-			   pwrite.flush();
+			   
+				//if((line = console.readLine()) != null)
+				if(gameStart)
+				talkToClients(console.readLine());
+			   
+			   /*for (int i = 0; i < clientCount; i++){
+					clients[i].send("GOD: " + console.readLine());
+			   }*/
+			   //streamOut.writeUTF("GOD: " + console.readLine());
+			   //streamOut.flush();
 			}
 		   catch(IOException ioe) {  
 			   logger.error("Server accept error: " + ioe); stop(); 
@@ -98,6 +98,7 @@ public class ChatServer implements Runnable
     * @PostCondition Thread is initiated
     */
    public void start() {
+	   console   = new BufferedReader(new InputStreamReader(System.in));
 	   if (thread == null)
 	    	thread = new Thread(this); 
        thread.start();
@@ -152,10 +153,35 @@ public class ChatServer implements Runnable
 		   clients[findClient(ID)].send(".bye");
 		   remove(ID); 
 	   }
-	   else {
-		   for (int i = 0; i < clientCount; i++)
-			   clients[i].send(input);   
+	   else if(input.equals(".gameStart")){
+		   gameStartCount++;
+		   System.out.println("gameStartCount: " + gameStartCount + " , ClientCount: " + clientCount);
+		   if(gameStartCount == clientCount){
+			   gameStart = true;
+		   }
 	   }
+	   else {
+		   for (int i = 0; i < clientCount; i++){
+			   clients[i].send(input);
+			   //clients[i].send(serverMsg);
+			   //System.out.println(input);
+			   logger.info(input);
+		   }
+	   }
+   }
+   
+   public void talkToClients(String serverMsg){
+		for (int i = 0; i < clientCount; i++){
+			clients[i].send("GOD: " + serverMsg);
+		}
+   }
+   
+   public int getClientCount(){
+	   return clientCount;
+   }
+   
+   public ChatServerThread getClients(int i){
+	   return clients[i];
    }
    
    /**
@@ -206,7 +232,8 @@ public class ChatServer implements Runnable
 		   try {  
 			   clients[clientCount].open(); 
 			   clients[clientCount].start();  
-			   clientCount++; 
+			   clientCount++;
+			   if(clientCount == 7) gameStart = true;
 		   }
 		   catch(IOException ioe) {
 			   logger.error("Error opening thread: " + ioe);
