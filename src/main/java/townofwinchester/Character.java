@@ -34,9 +34,13 @@ public class Character {
  public String getName(){
   return name;
  }
+
+ public String returnMafia(){
+ 	return name; 
+ }
  
  //public void setReady(){
-  //Messages status = new Messages(name, "I'm ready to begin");
+  //Message status = new Message(name, "I'm ready to begin");
  //}
  
 }
