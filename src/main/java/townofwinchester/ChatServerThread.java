@@ -7,6 +7,7 @@ import java.net.*;
 import java.io.*;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import java.util.Scanner;
 
 /**
  * ChatServerThread is the thread for the server part of the chat
@@ -25,6 +26,7 @@ public class ChatServerThread extends Thread {
    private int              ID        = -1;
    private DataInputStream  streamIn  =  null;
    private DataOutputStream streamOut = null;
+   private BufferedReader console = null;
    
    private static Logger logger = LogManager.getLogger("TownOfWinchester");
 
@@ -75,21 +77,26 @@ public class ChatServerThread extends Thread {
     * @return Nothing.
     */
    public void run()
-   {  logger.info("Server Thread " + ID + " running.");
+   {  
+	Scanner scanner = new Scanner(System.in);
+	String msg;
+	logger.info("Server Thread " + ID + " running.");
+	console = new BufferedReader(new InputStreamReader(System.in));
       while (true)
       {  try
-         {  server.handle(ID, streamIn.readUTF());
+         {  
+			server.handle(ID, streamIn.readUTF());
          }
          catch(IOException ioe)
          {  logger.error(ID + " ERROR reading: " + ioe.getMessage());
             server.remove(ID);
             try {
-    sleep(5000);
-   } catch (InterruptedException e) {
-    // TODO Auto-generated catch block
-    e.printStackTrace();
-    logger.error("Thread interruption failed");
-   }
+				sleep(5000);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+				logger.error("Thread interruption failed");
+			}
             interrupt();
          }
       }
