@@ -116,8 +116,8 @@ public class MyFrame extends javax.swing.JFrame{
         c.gridy = 0;
         topPanel.add(role, c);
 
-        counter = new JLabel("Time Left: " + timer.getDaySeconds() + " seconds", SwingConstants.TRAILING);
         timer.startDayNightCountdown(60);
+        counter = new JLabel("Time Left: " + timer.getDaySeconds() + " seconds", SwingConstants.TRAILING);
         counter.setFont(new Font("Inconsolata", Font.PLAIN, 20));
         c.fill = GridBagConstraints.HORIZONTAL;
         c.ipady = 50; //increase height of the title
