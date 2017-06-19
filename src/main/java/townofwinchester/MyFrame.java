@@ -30,6 +30,7 @@ import org.apache.logging.log4j.*;
  * @author Omar Grant
  * @author Roman 
  * @author James Spina
+ * @author Tim Dalton
  *
  * TODO:
  * Replace villager with a role variable and timer with an actual timer, and make all the inputs work
@@ -52,6 +53,7 @@ public class MyFrame extends javax.swing.JFrame{
     private final int people = 7;       //add # of people here?
     private final java.util.List<Path> imagePaths;  // List of all character images
     private BufferedImage image;    // image variable used to hold images that will be drawn
+    private GameTimer timer = new GameTimer(); //keeps track of night and day
 
     public MyFrame() {
         imagePaths = getPaths("/images");// read paths to image files
@@ -114,7 +116,8 @@ public class MyFrame extends javax.swing.JFrame{
         c.gridy = 0;
         topPanel.add(role, c);
 
-        counter = new JLabel("Counter - 10:00", SwingConstants.TRAILING);
+        timer.startDayNightCountdown(60);
+        counter = new JLabel("Time Left: " + timer.getDaySeconds() + " seconds", SwingConstants.TRAILING);
         counter.setFont(new Font("Inconsolata", Font.PLAIN, 20));
         c.fill = GridBagConstraints.HORIZONTAL;
         c.ipady = 50; //increase height of the title

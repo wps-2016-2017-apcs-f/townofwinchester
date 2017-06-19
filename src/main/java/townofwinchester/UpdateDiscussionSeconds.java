@@ -38,6 +38,6 @@ public class UpdateDiscussionSeconds extends TimerTask
 	@Override
 	public void run() 
 	{
-		seconds -=1;
+		seconds--;
 	}
 }

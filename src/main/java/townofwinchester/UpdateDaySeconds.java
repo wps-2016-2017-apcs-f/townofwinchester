@@ -38,6 +38,6 @@ public class UpdateDaySeconds extends TimerTask
 	@Override
 	public void run() 
 	{
-		seconds -=1;
+		seconds--;
 	}
 }
