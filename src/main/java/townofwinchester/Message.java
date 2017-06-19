@@ -2,7 +2,7 @@
  * Message.java
  */
 package townofwinchester;
-//import org.apache.logging.log4j.*;
+import org.apache.logging.log4j.*;
 import java.net.*;
 import java.io.*;
  
@@ -16,7 +16,7 @@ import java.io.*;
  */
 public class Message {  
  public String message;
- public static enum Type {TEXT, JOIN, MVOTE, VOTE};
+ public static enum Type {CHAT, JOIN, MVOTE, VOTE};
  //public Character god,sender,receiver;
  
  /** 
@@ -44,6 +44,6 @@ public class Message {
  }
  
  public String compileText(String name, String message) {
-   return Type.TEXT + ":" + name + ":" + message; 
+   return Type.CHAT + ":" + name + ":" + message; 
  }
 }

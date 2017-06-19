@@ -36,7 +36,7 @@ public class Character {
  }
  
  //public void setReady(){
-  //Messages status = new Messages(name, "I'm ready to begin");
+  //Message status = new Message(name, "I'm ready to begin");
  //}
  
 }
