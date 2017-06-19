@@ -153,7 +153,7 @@ public class ChatServer implements Runnable
 		   clients[findClient(ID)].send(".bye");
 		   remove(ID); 
 	   }
-	   else if(input.equals(".gameStart")){
+	   else if(input.contains(".gameStart")){
 		   gameStartCount++;
 		   System.out.println("gameStartCount: " + gameStartCount + " , ClientCount: " + clientCount);
 		   if(gameStartCount == clientCount){
