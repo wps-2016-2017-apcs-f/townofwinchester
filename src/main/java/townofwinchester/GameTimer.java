@@ -90,6 +90,11 @@ public class GameTimer
 	  gameTimer.scheduleAtFixedRate(updateDiscussionSeconds, 1000, 1000);
   }
   
+  /*
+   * This method provides the time remaining message
+   * 
+   * @ return the message of how much time is left
+   */
   public String timeMessage()
   {
 	  return "There are " + getDaySeconds() + " seconds remaining in the day.";

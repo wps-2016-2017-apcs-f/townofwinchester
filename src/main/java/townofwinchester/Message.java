@@ -14,9 +14,9 @@ import java.io.*;
  * @author Ethan Wong
  *
  */
-public class Message {  
- public String message;
- public static enum Type {CHAT, JOIN, MVOTE, VOTE};
+public class Message{  
+ public String nextCommand;
+ public static enum Type {CHAT, MCHAT, JOIN, PICK, TIME, MVOTE, VOTE};
  //public Character god,sender,receiver;
  
  /** 
@@ -34,13 +34,17 @@ public class Message {
  // message = details; 
  //}
 
- public String assignRole(boolean mafiaStatus, String name) {
+ public String assignRole(boolean indicateMafiaStatus, String name) {
   //Character character = new Character();
   //String name1 = character.getName();
-  if (mafiaStatus == true) 
-   return "You are a Mafia";
-  else   
-   return name + "is a villager";
+  if (indicateMafiaStatus == true){ 
+   nextCommand = name + "." + "toMafia()";
+   return Type.PICK + "You are a Mafia";
+    }	
+  else{   
+   nextCommand = name + "." + "toVillager()"; 
+   return Type.PICK + name + "is a villager";
+	}	
  }
  
  public String compileText(String name, String message) {

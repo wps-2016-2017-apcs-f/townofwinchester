@@ -69,14 +69,15 @@ public class ChatServer implements Runnable
 	   while (thread != null) {
 		   try {
 			   //talkToClients(console.readLine());
-			   if(gameStart == false){
+			   while(gameStart == false){
 				logger.info("Waiting for a client ...");
 				addThread(server.accept());
 			   }
 			   
 				//if((line = console.readLine()) != null)
-				if(gameStart)
-				talkToClients(console.readLine());
+				while(gameStart) {
+				    talkToClients(console.readLine());
+				}
 			   
 			   /*for (int i = 0; i < clientCount; i++){
 					clients[i].send("GOD: " + console.readLine());
@@ -153,7 +154,7 @@ public class ChatServer implements Runnable
 		   clients[findClient(ID)].send(".bye");
 		   remove(ID); 
 	   }
-	   else if(input.equals(".gameStart")){
+	   else if(input.contains(".gameStart")){
 		   gameStartCount++;
 		   System.out.println("gameStartCount: " + gameStartCount + " , ClientCount: " + clientCount);
 		   if(gameStartCount == clientCount){
