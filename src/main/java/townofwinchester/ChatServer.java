@@ -69,7 +69,7 @@ public class ChatServer implements Runnable
 	   while (thread != null) {
 		   try {
 			   //talkToClients(console.readLine());
-			   if(gameStart == false){
+			   while(gameStart == false){
 				logger.info("Waiting for a client ...");
 				addThread(server.accept());
 			   }
