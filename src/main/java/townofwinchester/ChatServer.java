@@ -75,8 +75,9 @@ public class ChatServer implements Runnable
 			   }
 			   
 				//if((line = console.readLine()) != null)
-				if(gameStart)
-				talkToClients(console.readLine());
+				while(gameStart) {
+				    talkToClients(console.readLine());
+				}
 			   
 			   /*for (int i = 0; i < clientCount; i++){
 					clients[i].send("GOD: " + console.readLine());
