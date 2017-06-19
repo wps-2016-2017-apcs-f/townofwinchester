@@ -149,7 +149,7 @@ public class ChatServer implements Runnable
     * @PostCondition sends a client's message or calls the remove method for the client
     */
    public synchronized void handle(int ID, String input) {
-	   if (input.equals(".bye")) {
+	   if (input.contains(".bye")) {
 		   clients[findClient(ID)].send(".bye");
 		   remove(ID); 
 	   }

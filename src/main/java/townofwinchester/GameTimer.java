@@ -16,7 +16,6 @@ public class GameTimer
   private Timer gameTimer = new Timer();
   private DayNightCycle dayNightCycle = new DayNightCycle();
   private DiscussionControl discussionControl = new DiscussionControl();
-  private UpdateDayMinutes updateDayMinutes = new UpdateDayMinutes();
   private UpdateDaySeconds updateDaySeconds = new UpdateDaySeconds();
   private UpdateDiscussionSeconds updateDiscussionSeconds = new UpdateDiscussionSeconds();
   
@@ -28,7 +27,7 @@ public class GameTimer
    */
   public boolean getIsDay()
   {
-    return dayNightCycle.getIsDay();
+	  return dayNightCycle.getIsDay();
   }
   
   /*
@@ -42,17 +41,7 @@ public class GameTimer
 	  return discussionControl.getIsDiscussion();
   }
   
-  /*
-   * An accessor method that allows other classes to access the integer
-   * value of the minutes left in the day or night
-   * 
-   * @return The number of minutes left in the day or night
-   */
-  public int getDayMinutes()
-  {
-	  return updateDayMinutes.getMinutes();
-  }
-  
+ 
   /*
    * An accessor method that allows other classes to access the integer
    * value of the seconds left in the day or night
@@ -79,16 +68,13 @@ public class GameTimer
    * Calling this method starts a countdown. At the end of the countdown, the day boolean value switches
    * to its opposite. 
    * 
-   * @param the delay (in minutes) before the day/night value switches
    * @param the delay (in seconds) before the day/night value switches
    */
-  public void startDayNightCountdown(int minutes, int seconds)
+  public void startDayNightCountdown(int seconds)
   {
-	  gameTimer.schedule(dayNightCycle, (minutes * 60000) + (seconds * 100));
-	  updateDayMinutes.setMinutes(minutes);
+	  gameTimer.schedule(dayNightCycle, seconds * 100);
 	  updateDaySeconds.setSeconds(seconds);
 	  gameTimer.scheduleAtFixedRate(updateDaySeconds, 1000, 1000);
-	  gameTimer.scheduleAtFixedRate(updateDayMinutes, 60000, 60000);
   }
   
   /*
@@ -103,7 +89,11 @@ public class GameTimer
 	  updateDiscussionSeconds.setSeconds(seconds);
 	  gameTimer.scheduleAtFixedRate(updateDiscussionSeconds, 1000, 1000);
   }
-
+  
+  public String timeMessage()
+  {
+	  return "There are " + getDaySeconds() + " seconds remaining in the day.";
+  }
 }
 
 
