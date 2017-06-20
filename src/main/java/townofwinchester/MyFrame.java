@@ -142,24 +142,26 @@ public class MyFrame extends javax.swing.JFrame{
         inputPanel.add(button);           //right is the "send" button
 
         pack();   //makes sure every layout and size we just defined gets applied before the stuff becomes visible
-    }
-/*    
-    public void readImage(int i){                                                                       //reads the image from files
+        
+        
+                                                                                                        //reads the image from files
         try{                                                                                            //try catch block necessary for reading images
         ClassLoader classLoader = getClass().getClassLoader();                                          //idk what this code does
-        File f = new File(classLoader.getResource("images/" + characterImages.get(i)).getFile());       //pulls an image from characterImages list at location i
-        image = ImageIO.read(f);                                                                        //reads the previously pulled file
-        image = new BufferedImage(image.getWidth(), image.getHeight(), BufferedImage.TYPE_INT_ARGB);    //constructor for BufferedImage class that sets image to the proper size and type
+        for (int i = 0; i < imagePaths.size(); i++){
+            File f = new File(classLoader.getResource("images/" + imagePaths.get(i)).getFile());       //pulls an image from imagePaths list at location i
+            image = ImageIO.read(f);                                                                        //reads the previously pulled file
+            image = new BufferedImage(image.getWidth(), image.getHeight(), BufferedImage.TYPE_INT_ARGB);    //constructor for BufferedImage class that sets image to the proper size and type
+        }
 
-
-        }catch(IOException e){   //catches the excpetion
+        }catch(IOException e){                                                                          //catches the excpetion
              System.out.println("Error: " + e);
         }
+     
+     //   Graphics g = new Graphics();
+     //   g.drawImage(image, 50, 50, null);               //Numbers temporary until I figure out how to access c.gridx/y for the temp Pictures
     }
-*/    
-    public void paintImage(Graphics g){
-        g.drawImage(image, 50, 50, null);               //Numbers temporary until I figure out how to access c.gridx/y for the temp Pictures
-    }
+
+    
 
     public static void main(String args[])throws IOException{  //IOException is for reading images
         EventQueue.invokeLater(new Runnable(){
