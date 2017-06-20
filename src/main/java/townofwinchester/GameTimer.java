@@ -9,6 +9,7 @@ import java.util.Timer;
  * 
  * @author Adrian Stone
  * @author Tim Dalton
+ * @author Andy Ark
  */
 
 public class GameTimer 
