@@ -22,6 +22,17 @@ public class FSM {
         LogManager.getLogger(TownOfWinchester.SHORT).trace(msg);
         switch (state) {
             case JOIN:
+                switch (msg.getType()) {
+                case CHAT:
+                case MCHAT:
+                case JOIN:
+                case PICK:
+                case TIME:
+                case MVOTE:
+                case VOTE:
+                default:
+                    break;
+            }
                 break;
             case PICK:
                 break;
@@ -33,6 +44,8 @@ public class FSM {
                 break;
         }
     }
+
+    public State getState() { return state; }
 
     private void updateState(State state) {
         String message = String.format("{} -> {}", this.state, state);
