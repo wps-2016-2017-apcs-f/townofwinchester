@@ -8,6 +8,8 @@ import java.io.*;
 import org.apache.logging.log4j.*;
 import java.util.Scanner;
 import java.awt.*;
+import javax.swing.*;
+import java.applet.*;
 
 /**
  * This class is for drawing on the GUI
