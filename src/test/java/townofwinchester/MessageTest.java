@@ -14,7 +14,35 @@ import junit.framework.TestSuite;
  * @author Ethan Wong
  */
 
-public class MessageTest extends TestCase {
+
+public class MessageTest extends TestCase{
+ /**
+     * This creates the test case
+     *
+     * @param testName name of the test case
+     */
+ public MessageTest( String testName )
+     {
+         super( testName );
+     }
+    /**
+     * @return the suite of tests being tested
+     */
+    public static Test suite()
+     {
+         return new TestSuite(MessageTest.class );
+     } 
+
+    /**
+     * Rigorous Test :-)
+     */
+    public void testApp()
+    {
+        assertTrue( true );
+    }
+
+}
+/**public class MessageTest extends TestCase {
     public static void main (String[] args) {
         Message test = new Message("CHAT:Tim:Oh no David died");
         System.out.println(test.assignRole(false, "James "));
@@ -23,4 +51,4 @@ public class MessageTest extends TestCase {
         System.out.println(test.getText());
         System.out.println(test.getName());
     }
-}
+*/    
