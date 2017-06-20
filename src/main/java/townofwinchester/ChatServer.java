@@ -26,19 +26,18 @@ public class ChatServer implements Runnable
    private ServerSocket server = null;
    private Socket socket = null;
    private BufferedReader console = null;
-   //private BufferedReader fromClient = null;
    private OutputStream outStream = null;
    private PrintWriter toClient = null;
-   //private InputStream inStream = null;
-   //private BufferedReader receiveRead = new BufferedReader(new InputStreamReader(inStream));
    private Thread thread = null;
    private int clientCount = 0;
    private String name = null;
    private boolean gameStart = false;
    private int gameStartCount = 0;
    private ChatClient serverChat = null;
+   private MessageQueue<String> msgQueue;
 
-   public ChatServer(int port, String name) {  
+   public ChatServer(int port, String name) {
+	   msgQueue = new MessageQueue<String>();
 	   try {
 		   logger.info("Binding to port " + port + ", please wait  ...");
 		   this.name = name;
@@ -66,24 +65,28 @@ public class ChatServer implements Runnable
     */
    public void run() {
 	   String line;
+	   try{
+			server.setSoTimeout(500); //This makes the server.accept() terminate after 5 seconds of waiting
+	   }
+	   catch(SocketException ex){
+		   logger.error("Was not able to set the timeout for the server socket");
+	   }
 	   while (thread != null) {
 		   try {
-			   //talkToClients(console.readLine());
-			   while(gameStart == false){
-				logger.info("Waiting for a client ...");
-				addThread(server.accept());
+			   if(gameStart == false){
+					logger.info("Waiting for a client ...");
+					try{
+						addThread(server.accept());
+					}
+					catch(SocketTimeoutException ste){
+						logger.error("server.accept() timed out after 500 millisecondsseconds");
+					}
 			   }
-			   
-				//if((line = console.readLine()) != null)
-				while(gameStart) {
-				    talkToClients(console.readLine());
+				else{
+					while(gameStart) {
+						talkToClients(console.readLine());
+					}
 				}
-			   
-			   /*for (int i = 0; i < clientCount; i++){
-					clients[i].send("GOD: " + console.readLine());
-			   }*/
-			   //streamOut.writeUTF("GOD: " + console.readLine());
-			   //streamOut.flush();
 			}
 		   catch(IOException ioe) {  
 			   logger.error("Server accept error: " + ioe); stop(); 
@@ -150,6 +153,8 @@ public class ChatServer implements Runnable
     * @PostCondition sends a client's message or calls the remove method for the client
     */
    public synchronized void handle(int ID, String input) {
+	   msgQueue.enqueue(input);
+	   //System.out.println(msgQueue);
 	   if (input.contains(".bye")) {
 		   clients[findClient(ID)].send(".bye");
 		   remove(ID); 
@@ -164,8 +169,6 @@ public class ChatServer implements Runnable
 	   else {
 		   for (int i = 0; i < clientCount; i++){
 			   clients[i].send(input);
-			   //clients[i].send(serverMsg);
-			   //System.out.println(input);
 			   logger.info(input);
 		   }
 	   }
