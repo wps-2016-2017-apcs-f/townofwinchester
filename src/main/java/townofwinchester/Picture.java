@@ -3,12 +3,20 @@
  */
 package townofwinchester;
 
-import java.net.*;
-import java.io.*;
-import org.apache.logging.log4j.*;
-import java.util.Scanner;
 import java.awt.*;
 import javax.swing.*;
+import java.lang.*;
+
+
+import java.awt.*;
+import javax.swing.*;
+import java.io.*;
+import java.net.*;
+import java.nio.file.*;
+import java.nio.file.attribute.*;
+import java.util.*;
+import org.apache.logging.log4j.*;
+import java.util.Scanner;
 import java.applet.*;
 //Following Imports are for Reading image files
 
@@ -20,6 +28,7 @@ import javax.imageio.ImageIO;
 /**
  * This class is for drawing on the GUI
  *
+ * @author Tim Dalton
  * @author Andy Ark
  * @author Roy Xing
  */
@@ -33,6 +42,9 @@ private BufferedImage image;    // image variable used to hold images that will 
 private final java.util.List<Path> imagePaths;  // List of all character images
 
  public Picture(){                                                                                        //reads the image from files
+     
+     imagePaths = getPaths("/images");// read paths to image files
+   
      try{                                                                                            //try catch block necessary for reading images
      ClassLoader classLoader = getClass().getClassLoader();                                          //idk what this code does
      for (int i = 0; i < imagePaths.size(); i++){
@@ -44,7 +56,7 @@ private final java.util.List<Path> imagePaths;  // List of all character images
      }catch(IOException e){                                                                          //catches the excpetion
           System.out.println("Error: " + e);
      }
-     imagePaths = getPaths("/images");// read paths to image files
+
  }
  public void paintComponent(Graphics g){
      g.drawImage(image, 50, 50, null);               //Numbers temporary until I figure out how to access c.gridx/y for the temp Pictures
