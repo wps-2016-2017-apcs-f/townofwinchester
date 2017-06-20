@@ -37,23 +37,23 @@ public class ChatServer implements Runnable
    private MessageQueue<String> msgQueue;
 
    public ChatServer(int port, String name) {
-	   msgQueue = new MessageQueue<String>();
-	   try {
-		   logger.info("Binding to port " + port + ", please wait  ...");
-		   this.name = name;
-		   server = new ServerSocket(port);  
-		   logger.info("Server started: " + server);
-		   start(); 
+    msgQueue = new MessageQueue<String>();
+    try {
+     logger.info("Binding to port " + port + ", please wait  ...");
+     this.name = name;
+     server = new ServerSocket(port);  
+     logger.info("Server started: " + server);
+     start(); 
     }
-	   catch(IOException ioe) {  
-		   logger.error("Can not bind to port " + port + ": " + ioe.getMessage()); 
-	   }
-	   try{
-		   Socket socket = server.accept();
-	   }
-	   catch(IOException ioe){
-		   logger.error("socket did not work");
-	   }
+    catch(IOException ioe) {  
+     logger.error("Can not bind to port " + port + ": " + ioe.getMessage()); 
+    }
+    try{
+     Socket socket = server.accept();
+    }
+    catch(IOException ioe){
+     logger.error("socket did not work");
+    }
    }
    
    /** 
@@ -64,34 +64,34 @@ public class ChatServer implements Runnable
     * @PostCondition Logger info displays that server is waiting for a client.
     */
    public void run() {
-	   String line;
-	   try{
-			server.setSoTimeout(500); //This makes the server.accept() terminate after 5 seconds of waiting
-	   }
-	   catch(SocketException ex){
-		   logger.error("Was not able to set the timeout for the server socket");
-	   }
-	   while (thread != null) {
-		   try {
-			   if(gameStart == false){
-					logger.info("Waiting for a client ...");
-					try{
-						addThread(server.accept());
-					}
-					catch(SocketTimeoutException ste){
-						logger.error("server.accept() timed out after 500 millisecondsseconds");
-					}
-			   }
-				else{
-					while(gameStart) {
-						talkToClients(console.readLine());
-					}
-				}
-			}
-		   catch(IOException ioe) {  
-			   logger.error("Server accept error: " + ioe); stop(); 
-		   }
-	   }
+    String line;
+    try{
+   server.setSoTimeout(500); //This makes the server.accept() terminate after 5 seconds of waiting
+    }
+    catch(SocketException ex){
+      logger.error("server.accept() timed out after 500 millisecondsseconds");
+    }
+    while (thread != null) {
+     try {
+      if(gameStart == false){
+     logger.info("Waiting for a client ...");
+     try{
+      addThread(server.accept());
+     }
+     catch(SocketTimeoutException ste){
+      //logger.error("Was not able to set the timeout for the server socket");
+     }
+      }
+    else{
+     while(gameStart) {
+      talkToClients(console.readLine());
+     }
+    }
+   }
+     catch(IOException ioe) {  
+      logger.error("Server accept error: " + ioe); stop(); 
+     }
+    }
    }
    
    /** 
@@ -102,9 +102,9 @@ public class ChatServer implements Runnable
     * @PostCondition Thread is initiated
     */
    public void start() {
-	   console   = new BufferedReader(new InputStreamReader(System.in));
-	   if (thread == null)
-	    	thread = new Thread(this); 
+    console   = new BufferedReader(new InputStreamReader(System.in));
+    if (thread == null)
+      thread = new Thread(this); 
        thread.start();
    }
    
@@ -115,17 +115,17 @@ public class ChatServer implements Runnable
     * 
     */
    public void stop() {  
-	   if (thread != null) {  
-        	try {
-        		Thread.sleep(5000);
+    if (thread != null) {  
+         try {
+          Thread.sleep(5000);
         } 
-        	catch(InterruptedException e) {
-        		// TODO Auto-generated catch block
-        		e.printStackTrace();
-        		logger.error("Thread interruption failed");
-        	}
-        	thread.interrupt();
-        	thread = null;
+         catch(InterruptedException e) {
+          // TODO Auto-generated catch block
+          e.printStackTrace();
+          logger.error("Thread interruption failed");
+         }
+         thread.interrupt();
+         thread = null;
        }
    }
    
@@ -137,10 +137,10 @@ public class ChatServer implements Runnable
     * @return location of client. Returns -1 if search for client unsuccessful.
     */
    private int findClient(int ID) {
-	   for (int i = 0; i < clientCount; i++)
-		   if (clients[i].getID() == ID)
-			   return i;
-	   return -1;
+    for (int i = 0; i < clientCount; i++)
+     if (clients[i].getID() == ID)
+      return i;
+    return -1;
    }
    
    /** 
@@ -153,39 +153,39 @@ public class ChatServer implements Runnable
     * @PostCondition sends a client's message or calls the remove method for the client
     */
    public synchronized void handle(int ID, String input) {
-	   msgQueue.enqueue(input);
-	   //System.out.println(msgQueue);
-	   if (input.contains(".bye")) {
-		   clients[findClient(ID)].send(".bye");
-		   remove(ID); 
-	   }
-	   else if(input.contains(".gameStart")){
-		   gameStartCount++;
-		   System.out.println("gameStartCount: " + gameStartCount + " , ClientCount: " + clientCount);
-		   if(gameStartCount == clientCount){
-			   gameStart = true;
-		   }
-	   }
-	   else {
-		   for (int i = 0; i < clientCount; i++){
-			   clients[i].send(msgQueue.peek());
-		   }
-	   }
-	   logger.info(input);
+    msgQueue.enqueue(input);
+    //System.out.println(msgQueue);
+    if (input.contains(".bye")) {
+     clients[findClient(ID)].send(".bye");
+     remove(ID); 
+    }
+    else if(input.contains(".gameStart")){
+     gameStartCount++;
+     System.out.println("gameStartCount: " + gameStartCount + " , ClientCount: " + clientCount);
+     if(gameStartCount == clientCount){
+      gameStart = true;
+     }
+    }
+    else {
+     for (int i = 0; i < clientCount; i++){
+      clients[i].send(msgQueue.peek());
+     }
+    }
+    logger.info(input);
    }
    
    public void talkToClients(String serverMsg){
-		for (int i = 0; i < clientCount; i++){
-			clients[i].send("GOD: " + serverMsg);
-		}
+  for (int i = 0; i < clientCount; i++){
+   clients[i].send("GOD: " + serverMsg);
+  }
    }
    
    public int getClientCount(){
-	   return clientCount;
+    return clientCount;
    }
    
    public ChatServerThread getClients(int i){
-	   return clients[i];
+    return clients[i];
    }
    
    /**
@@ -196,30 +196,30 @@ public class ChatServer implements Runnable
     * @PostCondition removes client from chat.
     */
    public synchronized void remove(int ID) {
-	   int pos = findClient(ID);
-	   if (pos >= 0) {
-		   ChatServerThread toTerminate = clients[pos];
-		   logger.info("Removing client thread " + ID + " at " + pos);
-		   if (pos < clientCount-1)
-			   for (int i = pos+1; i < clientCount; i++)
-				   clients[i-1] = clients[i];
-		   clientCount--;
-		   try {
-			   toTerminate.close(); 
-		   }
-		   catch(IOException ioe) {
-			   logger.error("Error closing thread: " + ioe); 
-		   }
-		   try {
-			   Thread.sleep(5000);
-		   }
-		   catch (InterruptedException e) {
-			   // TODO Auto-generated catch block
-			   e.printStackTrace();
-			   logger.error("Thread interruption failed");
-		   }
-		   toTerminate.interrupt();
-	   }
+    int pos = findClient(ID);
+    if (pos >= 0) {
+     ChatServerThread toTerminate = clients[pos];
+     logger.info("Removing client thread " + ID + " at " + pos);
+     if (pos < clientCount-1)
+      for (int i = pos+1; i < clientCount; i++)
+       clients[i-1] = clients[i];
+     clientCount--;
+     try {
+      toTerminate.close(); 
+     }
+     catch(IOException ioe) {
+      logger.error("Error closing thread: " + ioe); 
+     }
+     try {
+      Thread.sleep(5000);
+     }
+     catch (InterruptedException e) {
+      // TODO Auto-generated catch block
+      e.printStackTrace();
+      logger.error("Thread interruption failed");
+     }
+     toTerminate.interrupt();
+    }
    }
    
    /** 
@@ -230,28 +230,28 @@ public class ChatServer implements Runnable
     * @PostCondition client thread is logged.
     */
    private void addThread(Socket socket) {
-	   if (clientCount < clients.length) {
-		   logger.info("Client accepted: " + socket);
-		   clients[clientCount] = new ChatServerThread(this, socket);
-		   try {  
-			   clients[clientCount].open(); 
-			   clients[clientCount].start();  
-			   clientCount++;
-			   if(clientCount == 7) gameStart = true;
-		   }
-		   catch(IOException ioe) {
-			   logger.error("Error opening thread: " + ioe);
-		   } 
-	   }
-	   else
-		   logger.info("Client refused: maximum " + clients.length + " reached.");
+    if (clientCount < clients.length) {
+     logger.info("Client accepted: " + socket);
+     clients[clientCount] = new ChatServerThread(this, socket);
+     try {  
+      clients[clientCount].open(); 
+      clients[clientCount].start();  
+      clientCount++;
+      if(clientCount == 7) gameStart = true;
+     }
+     catch(IOException ioe) {
+      logger.error("Error opening thread: " + ioe);
+     } 
+    }
+    else
+     logger.info("Client refused: maximum " + clients.length + " reached.");
    }
    
    /** 
     * Accessor method for name.
     */
    public String getName() {
-	   return this.name;
+    return this.name;
    }
    
    /**
@@ -262,7 +262,7 @@ public class ChatServer implements Runnable
     * @return client name
     */
    public String getClientName(int ID) {
-	   return clients[findClient(ID)].getName();
+    return clients[findClient(ID)].getName();
    }
    
    /**
@@ -270,10 +270,10 @@ public class ChatServer implements Runnable
     * @param args is not used
     */
    public static void main(String args[]) {
-	   ChatServer server = null;
-	   if (args.length != 1)
-		   logger.info("Usage: java ChatServer port");
-	   else
-		   server = new ChatServer(Integer.parseInt(args[0]), args[1]);
+    ChatServer server = null;
+    if (args.length != 1)
+     logger.info("Usage: java ChatServer port");
+    else
+     server = new ChatServer(Integer.parseInt(args[0]), args[1]);
    }
 }
