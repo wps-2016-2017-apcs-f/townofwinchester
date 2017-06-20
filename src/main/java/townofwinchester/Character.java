@@ -13,34 +13,37 @@ import java.io.*;
  * @author Lulu Tian
  * @author Ryan Tsai
  * @author Ethan Wong
+ * @author Roy Xing
  */
  
 public class Character {
- public boolean mafiaStatus;
- public String name;
+ private boolean mafiaStatus;
+ private String name;
+ private int ID;
  
- public Character(String login){
-  name = login; 
+ public Character(String login, int ID){
+	name = login;
+	this.ID = ID;
  }
  
  public void toMafia(){
-  mafiaStatus = true;
+	mafiaStatus = true;
  }
  
  public void toVillager(){
-  mafiaStatus = false; 
+	mafiaStatus = false; 
  }
  
  public String getName(){
-  return name;
+	return name;
+ }
+ 
+ public int getID(){
+	return ID;
  }
 
  public String returnMafia(){
  	return name; 
  }
- 
- //public void setReady(){
-  //Message status = new Message(name, "I'm ready to begin");
- //}
  
 }
