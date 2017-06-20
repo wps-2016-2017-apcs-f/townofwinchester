@@ -21,5 +21,8 @@ public class MessageTest extends Message{
   Message test = new Message();
   System.out.println(test.assignRole(false, "James "));
   System.out.println(test.compileText("James", "We should kill David"));
+  test.parseMessage("CHAT:Tim:Oh no David died");
+  System.out.println(test.text);
+  System.out.println(test.name);
  }
 }
