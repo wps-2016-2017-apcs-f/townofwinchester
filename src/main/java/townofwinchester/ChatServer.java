@@ -168,10 +168,10 @@ public class ChatServer implements Runnable
 	   }
 	   else {
 		   for (int i = 0; i < clientCount; i++){
-			   clients[i].send(input);
-			   logger.info(input);
+			   clients[i].send(msgQueue.peek());
 		   }
 	   }
+	   logger.info(input);
    }
    
    public void talkToClients(String serverMsg){
