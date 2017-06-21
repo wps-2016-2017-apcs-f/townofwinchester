@@ -181,7 +181,7 @@ public class ChatServer implements Runnable
     }
     else {
      for (int i = 0; i < clientCount; i++){
-      clients[i].send(msgQueue.peek());
+      clients[i].send( clients[findClient(ID)].getClientName() + ":" + input);
      }
     }
     logger.info(input);
