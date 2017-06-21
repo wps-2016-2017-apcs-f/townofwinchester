@@ -28,6 +28,7 @@ public class ChatServerThread extends Thread {
    private DataOutputStream streamOut = null;
    private BufferedReader console = null;
    private String name = null;
+   private boolean nameStatus = true;
    
    private static Logger logger = LogManager.getLogger("TownOfWinchester");
 
@@ -46,7 +47,14 @@ public class ChatServerThread extends Thread {
    public String getClientName(){
     return this.name;
    }
-   
+   public boolean nameChange()
+   {
+     return nameStatus;
+   }
+   public void setBoolNameFalse()
+   {
+     nameStatus = false;
+   }
    /**
     * This is the method that sends the string message
     * @param msg This is the string message to be sent

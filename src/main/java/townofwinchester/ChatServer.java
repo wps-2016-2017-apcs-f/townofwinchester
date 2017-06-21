@@ -35,8 +35,7 @@ public class ChatServer implements Runnable
    private int gameStartCount = 0;
    private ChatClient serverChat = null;
    private MessageQueue<String> msgQueue;
-   private boolean changeName = true;
-
+   
    public ChatServer(int port, String name) {
     msgQueue = new MessageQueue<String>();
     try {
@@ -168,10 +167,10 @@ public class ChatServer implements Runnable
    public synchronized void handle(int ID, String input) {
     msgQueue.enqueue(input);
     //System.out.println(msgQueue);
-    if (input.contains(":")&&changeName==true)
+    if (input.contains(":")&&clients[findClient(ID)].nameChange()==true)
     {
         clients[findClient(ID)].setClientName(this.findName(input));
-        changeName = false;
+        clients[findClient(ID)].setBoolNameFalse();
     }
     else if (input.contains(".bye")) {
      clients[findClient(ID)].send(".bye");
