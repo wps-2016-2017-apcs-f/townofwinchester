@@ -48,7 +48,7 @@ private final java.util.List<Path> imagePaths;  // List of all character images
      try{                                                                                            //try catch block necessary for reading images
      ClassLoader classLoader = getClass().getClassLoader();                                          //idk what this code does
 
-     File f = new File(classLoader.getResource("images/" + imagePaths.get(i)).getFile());       //pulls an image from imagePaths list at location i
+     File f = new File(classLoader.getResource("images/" + imagePaths.get(i-1)).getFile());       //pulls an image from imagePaths list at location i
      image = ImageIO.read(f);                                                                        //reads the previously pulled file
      image = new BufferedImage(image.getWidth(), image.getHeight(), BufferedImage.TYPE_INT_ARGB);    //constructor for BufferedImage class that sets image to the proper size and type
      

@@ -26,7 +26,7 @@ public class TownOfWinchester {
      */
     public static void main(String[] args) {
         logger.info("# TownOfWinchester");
-        new MyFrame();
+        //new MyFrame();
         CLO clo = new CLO(args);
         if(clo.isClient()){
             new ChatClient(clo.getHost(), clo.getPort(), args[0]);

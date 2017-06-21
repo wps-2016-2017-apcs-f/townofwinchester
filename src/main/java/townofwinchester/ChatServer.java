@@ -167,8 +167,10 @@ public class ChatServer implements Runnable
    public synchronized void handle(int ID, String input) {
     msgQueue.enqueue(input);
     //System.out.println(msgQueue);
-    clients[findClient(ID)].setClientName(this.findName(input));
-    if (input.contains(".bye")) {
+    if (input.contains(":"))
+        clients[findClient(ID)].setClientName(this.findName(input));
+    
+    else if (input.contains(".bye")) {
      clients[findClient(ID)].send(".bye");
      remove(ID); 
     }
@@ -181,10 +183,10 @@ public class ChatServer implements Runnable
     }
     else {
      for (int i = 0; i < clientCount; i++){
-      clients[i].send(msgQueue.peek());
+      clients[i].send( clients[findClient(ID)].getClientName() + ": " + input);
      }
     }
-    logger.info(input);
+    logger.info(clients[findClient(ID)].getClientName() + ": " + input);
    }
    
    public void talkToClients(String serverMsg){
