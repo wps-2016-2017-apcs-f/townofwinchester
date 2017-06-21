@@ -143,6 +143,14 @@ public class ChatServer implements Runnable
     return -1;
    }
    
+   /**
+    * 
+    * @param input This is the message that the client sends
+    * @return the name of the client
+    */
+   public String findName(String input) {
+	   return input.substring(0, input.indexOf(":"));
+   }
    /** 
     * Responds to client inputs.
     * 
