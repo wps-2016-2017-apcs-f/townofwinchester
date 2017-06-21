@@ -55,7 +55,9 @@ public class ChatServer implements Runnable
      logger.error("socket did not work");
     }
    }
-   
+   public MessageQueue<String> getMsgQueue() {
+	   return msgQueue;
+   }
    /** 
     * Server opens the chat window.
     * 
