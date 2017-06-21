@@ -169,7 +169,8 @@ public class ChatServer implements Runnable
     //System.out.println(msgQueue);
     if (input.contains(":"))
         clients[findClient(ID)].setClientName(this.findName(input));
-    if (input.contains(".bye")) {
+    
+    else if (input.contains(".bye")) {
      clients[findClient(ID)].send(".bye");
      remove(ID); 
     }
