@@ -16,7 +16,7 @@ import java.util.*;
  * 
  */
 
-public class ClientWindow extends JFrame implements ActionListener{
+public class ClientWindow extends GameElements implements ActionListener{
 
     // these are the components we need.
     private final JSplitPane splitPane;  // split the window in top and bottom
@@ -29,11 +29,6 @@ public class ClientWindow extends JFrame implements ActionListener{
     private final JButton button;         // and a "send" button
     private final JLabel role;           //role of player
     private final JLabel counter;        //amount of time left
-    private final int people = 8;         //add # of people here?
-    private boolean day = true;           //day/night
-    private String villager = "Villager";
-    private boolean vote = false;
-    private int sum;
     
     public ClientWindow(){
 
@@ -58,7 +53,7 @@ public class ClientWindow extends JFrame implements ActionListener{
         });
 
         //window
-        setPreferredSize(new Dimension(Math.max(800, 120*people + 100), 600));     //initial window is 1000x600 pixels, though width expands as needed
+        setPreferredSize(new Dimension(Math.max(800, 120*getPeople() + 100), 600));     //initial window is 1000x600 pixels, though width expands as needed
         getContentPane().setLayout(new GridLayout());
         getContentPane().add(splitPane);
 
@@ -71,13 +66,13 @@ public class ClientWindow extends JFrame implements ActionListener{
         GridBagLayout testLayout = new GridBagLayout();
         topPanel.setLayout(testLayout);
         GridBagConstraints c = new GridBagConstraints();
-        if(day == true)
+        if(getDay() == true)
           topPanel.setBackground(Color.WHITE);
         else
           topPanel.setBackground(Color.BLACK);
         
-        final boolean[] arr = new boolean[people];                  //arr of votes
-        for(int i = 0; i < people; i++){                      //makes buttons and vote tally
+        final boolean[] arr = new boolean[getPeople()];                  //arr of votes
+        for(int i = 0; i < getPeople(); i++){                      //makes buttons and vote tally
           final int temp = i;
           c.fill = GridBagConstraints.HORIZONTAL;
           c.gridx = i;
@@ -100,8 +95,8 @@ public class ClientWindow extends JFrame implements ActionListener{
                 z += m;
               }
               sum = z;
-              System.out.println(sum);
-              if(sum != 0)
+              System.out.println(getSum());
+              if(getSum() != 0)
                 System.out.println("Cannot Vote Twice");
               else{
               arr[temp] = !arr[temp];
@@ -113,7 +108,7 @@ public class ClientWindow extends JFrame implements ActionListener{
           topPanel.add(a, c);
         }
         
-        for(int j = 0; j < people; j++){                      //makes pictures **TEMP**
+        for(int j = 0; j < getPeople(); j++){                      //makes pictures **TEMP**
           c.fill = GridBagConstraints.HORIZONTAL;
           c.gridx = j;
           c.gridy = 2;
@@ -122,7 +117,7 @@ public class ClientWindow extends JFrame implements ActionListener{
           topPanel.add(d, c);
         }
         
-        role = new JLabel(villager, SwingConstants.LEADING);
+        role = new JLabel(getVillager(), SwingConstants.LEADING);
         role.setFont(new Font("Inconsolata", Font.PLAIN, 20));
         c.fill = GridBagConstraints.HORIZONTAL;
         c.ipady = 50; //increase height of the title
