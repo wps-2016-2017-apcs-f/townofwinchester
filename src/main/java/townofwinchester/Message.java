@@ -15,25 +15,10 @@ import java.io.*;
  *
  */
 public class Message{  
-    public static enum Type {CHAT, MCHAT, JOIN, PICK, TIME, MVOTE, VOTE};
+    public static enum Type {CHAT, MCHAT, JOIN, PICK, TIME, MVOTE, VOTE, CLOSE, PERSON, START, CLICK, KILL, MKILL};
     private Type type;
     private int ID;
     private String text;
-
-    /** 
-     * Describes the Message that is being Snet
-     * 
-     * @from args is used to indicate the character that is sending the message. 
-     * 
-     * @to args is used to indicate the character that will eventually receive the message and is able to access it. 
-     *
-     * @details describes the content of the message
-     */
-    //public Message(Character from, Character to, String details) {
-    // sender = from;
-    // receiver = to; 
-    // message = details; 
-    //}
     
     // Example: "CHAT:NAME:Hi, there!"
     public Message(String message) {
