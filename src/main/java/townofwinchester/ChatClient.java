@@ -38,6 +38,7 @@ public class ChatClient implements Runnable
          logger.info("Connected: " + socket);
          System.out.println("Welcome " + name + "! :^)");
          start();
+         streamOut.writeUTF(name + " has joined the game");
       }
       catch(UnknownHostException uhe){
     logger.info("Host unknown: " + uhe.getMessage());
