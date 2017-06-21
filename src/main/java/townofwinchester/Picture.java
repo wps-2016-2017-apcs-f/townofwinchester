@@ -41,25 +41,25 @@ public class Picture extends JPanel{
 private BufferedImage image;    // image variable used to hold images that will be drawn
 private final java.util.List<Path> imagePaths;  // List of all character images
 
- public Picture(){                                                                                        //reads the image from files
+ public Picture(int i){                                                                                        //reads the image from files
      
      imagePaths = getPaths("/images");// read paths to image files
    
      try{                                                                                            //try catch block necessary for reading images
      ClassLoader classLoader = getClass().getClassLoader();                                          //idk what this code does
-     for (int i = 0; i < imagePaths.size(); i++){
-         File f = new File(classLoader.getResource("images/" + imagePaths.get(i)).getFile());       //pulls an image from imagePaths list at location i
-         image = ImageIO.read(f);                                                                        //reads the previously pulled file
-         image = new BufferedImage(image.getWidth(), image.getHeight(), BufferedImage.TYPE_INT_ARGB);    //constructor for BufferedImage class that sets image to the proper size and type
-     }
+
+     File f = new File(classLoader.getResource("images/" + imagePaths.get(i)).getFile());       //pulls an image from imagePaths list at location i
+     image = ImageIO.read(f);                                                                        //reads the previously pulled file
+     image = new BufferedImage(image.getWidth(), image.getHeight(), BufferedImage.TYPE_INT_ARGB);    //constructor for BufferedImage class that sets image to the proper size and type
+     
 
      }catch(IOException e){                                                                          //catches the excpetion
           System.out.println("Error: " + e);
      }
 
  }
- public void paintComponent(Graphics g){
-     g.drawImage(image, 50, 50, null);               //Numbers temporary until I figure out how to access c.gridx/y for the temp Pictures
+ public void paintComponent(Graphics g, int i, int j){
+     g.drawImage(image, i, j, null);               //Numbers temporary until I figure out how to access c.gridx/y for the temp Pictures
  }
  
      /**
