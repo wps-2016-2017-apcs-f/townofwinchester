@@ -38,6 +38,7 @@ public class MyFrame extends javax.swing.JFrame{
     private final JSplitPane splitPane; // split the window in top and bottom
     private final JPanel topPanel;      // container panel for the top
     private final JPanel bottomPanel;   // container panel for the bottom
+    private final JPanel picturePanel;  // container panel for the pictures
     private final JScrollPane scrollPane;   // makes the text scrollable
     private final JTextArea textArea;   // the text
     private final JPanel inputPanel;    // under the text a container for all the input elements
@@ -54,7 +55,8 @@ public class MyFrame extends javax.swing.JFrame{
 
         topPanel = new JPanel();         //top component
         bottomPanel = new JPanel();      //bottom component
-
+        picturePanel = new JPanel();     //picture panel
+        
         //text area
         scrollPane = new JScrollPane();
         textArea = new JTextArea();
@@ -93,9 +95,9 @@ public class MyFrame extends javax.swing.JFrame{
             c.fill = GridBagConstraints.HORIZONTAL;
             c.gridx = j;
             c.gridy = 2;
-            JLabel b = new JLabel("       Picture " + (j+1));
-            b.setPreferredSize(new Dimension(100, 40));
-            topPanel.add(b, c);
+            Picture b = new Picture(j+1);
+            b.setPreferredSize(new Dimension(400, 100));
+            picturePanel.add(b, c);
         }
 
         role = new JLabel("Villager", SwingConstants.LEADING);
