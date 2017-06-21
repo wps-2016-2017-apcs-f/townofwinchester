@@ -167,7 +167,8 @@ public class ChatServer implements Runnable
    public synchronized void handle(int ID, String input) {
     msgQueue.enqueue(input);
     //System.out.println(msgQueue);
-    clients[findClient(ID)].setClientName(this.findName(input));
+    if (input.contains(":"))
+        clients[findClient(ID)].setClientName(this.findName(input));
     if (input.contains(".bye")) {
      clients[findClient(ID)].send(".bye");
      remove(ID); 
