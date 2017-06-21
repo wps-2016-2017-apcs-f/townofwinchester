@@ -59,7 +59,7 @@ public class Message{
     }
 
     public Type getType() { return type; }
-    public int getID() { return name; }
+    public int getID() { return ID; }
     public String getText() { return text; }
 
     public String toString() {
@@ -70,20 +70,20 @@ public class Message{
 
     private String nextCommand;
 
-    public String assignRole(boolean indicateMafiaStatus, String name) {
+    public String assignRole(boolean indicateMafiaStatus, int ID) {
         //Character character = new Character();
         //String name1 = character.getName();
         if (indicateMafiaStatus == true){ 
-            nextCommand = name + "." + "toMafia()";
+            nextCommand = ID + "." + "toMafia()";
             return Type.PICK + "You are a Mafia";
         } 
         else{   
-            nextCommand = name + "." + "toVillager()"; 
-            return Type.PICK + name + "is a villager";
+            nextCommand = ID + "." + "toVillager()"; 
+            return Type.PICK + ID + "is a villager";
         } 
     }
 
-    public String compileText(String name, String message) {
-        return Type.CHAT + ":" + name + ":" + message; 
+    public String compileText(int ID, String message) {
+        return Type.CHAT + ":" + ID + ":" + message; 
     }
 }
