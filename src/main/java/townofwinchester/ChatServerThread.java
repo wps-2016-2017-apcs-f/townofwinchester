@@ -27,6 +27,7 @@ public class ChatServerThread extends Thread {
    private DataInputStream  streamIn  =  null;
    private DataOutputStream streamOut = null;
    private BufferedReader console = null;
+   private String name = null;
    
    private static Logger logger = LogManager.getLogger("TownOfWinchester");
 
@@ -35,6 +36,15 @@ public class ChatServerThread extends Thread {
       server = _server;
       socket = _socket;
       ID     = socket.getPort();
+	  this.name = "noName"; //this is for testing if the name was properly set
+   }
+   
+   public void setClientName(String name){
+	   this.name = name;
+   }
+   
+   public String getClientName(){
+	   return this.name;
    }
    
    /**
