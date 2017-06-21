@@ -22,15 +22,15 @@ public class Message{
     
     // Example: "CHAT:NAME:Hi, there!"
     public Message(String message) {
-        String[] parts = message.split(":");
-        assert parts.length >= 3 : message + " must have (at least) two ':'";
+        String[] parts = message.split("-");
+        assert parts.length >= 3 : message + " must have (at least) two '-'";
         for (Type type : Type.values())
             if (type.toString().equals(parts[0].toUpperCase())) {
                 this.type = type;
                 this.ID = Integer.parseInt(parts[1]);
                 this.text = parts[2];
                 for (int i = 3; i < parts.length; i++)
-                    this.text += ":" + parts[i];
+                    this.text += "-" + parts[i];
             }
         assert this.type != null && this.ID != 0 && this.text != null
         : "String message parse failed";
@@ -48,7 +48,7 @@ public class Message{
     public String getText() { return text; }
 
     public String toString() {
-        return type.toString() + ":" + ID + ":" + text;
+        return type.toString() + "-" + ID + "-" + text;
     }
 
     // RED_FLAG: obsolete methods
