@@ -146,8 +146,10 @@ public class ChatServer implements Runnable
    }
    
    /**
+    * Finds client name
     * 
     * @param input This is the message that the client sends
+    * 
     * @return the name of the client
     */
    public String findName(String input) {
@@ -165,6 +167,7 @@ public class ChatServer implements Runnable
    public synchronized void handle(int ID, String input) {
     msgQueue.enqueue(input);
     //System.out.println(msgQueue);
+    clients[findClient(ID)].setClientName(this.findName(input));
     if (input.contains(".bye")) {
      clients[findClient(ID)].send(".bye");
      remove(ID); 
@@ -260,20 +263,11 @@ public class ChatServer implements Runnable
    /** 
     * Accessor method for name.
     */
-   public String getName() {
-    return this.name;
-   }
+   //public String getName() {
+   // return this.name;
+   //}
    
-   /**
-    * Returns client name.
-    * 
-    * @param ID client ID
-    * 
-    * @return client name
-    */
-   public String getClientName(int ID) {
-    return clients[findClient(ID)].getName();
-   }
+
    
    /**
     * The main method for this class sets the server to a new ChatServer
