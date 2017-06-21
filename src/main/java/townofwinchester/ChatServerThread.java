@@ -36,15 +36,15 @@ public class ChatServerThread extends Thread {
       server = _server;
       socket = _socket;
       ID     = socket.getPort();
-	  this.name = "noName"; //this is for testing if the name was properly set
+   this.name = "noName"; //this is for testing if the name was properly set
    }
    
    public void setClientName(String name){
-	   this.name = name;
+    this.name = name;
    }
    
    public String getClientName(){
-	   return this.name;
+    return this.name;
    }
    
    /**
@@ -88,25 +88,25 @@ public class ChatServerThread extends Thread {
     */
    public void run()
    {  
-	Scanner scanner = new Scanner(System.in);
-	String msg;
-	logger.info("Server Thread " + ID + " running.");
-	console = new BufferedReader(new InputStreamReader(System.in));
+ Scanner scanner = new Scanner(System.in);
+ String msg;
+ logger.info("Server Thread " + ID + " running.");
+ console = new BufferedReader(new InputStreamReader(System.in));
       while (true)
       {  try
          {  
-			server.handle(ID, streamIn.readUTF());
+   server.handle(ID, streamIn.readUTF());
          }
          catch(IOException ioe)
          {  logger.error(ID + " ERROR reading: " + ioe.getMessage());
             server.remove(ID);
             try {
-				sleep(5000);
-			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-				logger.error("Thread interruption failed");
-			}
+    sleep(5000);
+   } catch (InterruptedException e) {
+    // TODO Auto-generated catch block
+    e.printStackTrace();
+    logger.error("Thread interruption failed");
+   }
             interrupt();
          }
       }
