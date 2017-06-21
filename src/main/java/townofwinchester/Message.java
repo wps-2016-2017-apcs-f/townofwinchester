@@ -42,12 +42,12 @@ public class Message{
         for (Type type : Type.values())
             if (type.toString().equals(parts[0].toUpperCase())) {
                 this.type = type;
-                this.ID = parts[1];
+                this.ID = Integer.parseInt(parts[1]);
                 this.text = parts[2];
                 for (int i = 3; i < parts.length; i++)
                     this.text += ":" + parts[i];
             }
-        assert this.type != null && this.ID != null && this.text != null
+        assert this.type != null && this.ID != 0 && this.text != null
         : "String message parse failed";
         LogManager.getLogger(TownOfWinchester.SHORT).debug("Message({})", toString());
     }
@@ -67,23 +67,22 @@ public class Message{
     }
 
     // RED_FLAG: obsolete methods
-
-    private String nextCommand;
-
-    public String assignRole(boolean indicateMafiaStatus, int ID) {
-        //Character character = new Character();
-        //String name1 = character.getName();
-        if (indicateMafiaStatus == true){ 
-            nextCommand = ID + "." + "toMafia()";
-            return Type.PICK + "You are a Mafia";
-        } 
-        else{   
-            nextCommand = ID + "." + "toVillager()"; 
-            return Type.PICK + ID + "is a villager";
-        } 
-    }
-
-    public String compileText(int ID, String message) {
-        return Type.CHAT + ":" + ID + ":" + message; 
-    }
-}
+/**
+ *   private String nextCommand;
+ *
+ *   public String assignRole(boolean indicateMafiaStatus, int ID) {
+ *       //Character character = new Character();
+ *       //String name1 = character.getName();
+ *       if (indicateMafiaStatus == true){ 
+ *           nextCommand = ID + "." + "toMafia()";
+ *           return Type.PICK + "You are a Mafia";
+ *       } 
+ *       else{   
+ *           nextCommand = ID + "." + "toVillager()"; 
+ *           return Type.PICK + ID + "is a villager";
+ *       } 
+ *   }
+ *
+ *   public String compileText(int ID, String message) {
+ *       return Type.CHAT + ":" + ID + ":" + message; 
+ */   }
