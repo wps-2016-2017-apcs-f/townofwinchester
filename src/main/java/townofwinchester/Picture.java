@@ -32,37 +32,35 @@ import javax.imageio.ImageIO;
  * @author Andy Ark
  * @author Roy Xing
  */
-
-
-
-
 public class Picture extends JPanel{
- 
-private BufferedImage image;    // image variable used to hold images that will be drawn
-private final java.util.List<Path> imagePaths;  // List of all character images
+    
+    private BufferedImage image;    // image variable used to hold images that will be drawn
+    private static java.util.List<Path> imagePaths;  // List of all character images
 
- public Picture(int i){                                                                                        //reads the image from files
-     
-     imagePaths = getPaths("/images");// read paths to image files
-   
-     try{                                                                                            //try catch block necessary for reading images
-     ClassLoader classLoader = getClass().getClassLoader();                                          //idk what this code does
+    public Picture(int i) {                                                                                       //reads the image from file
+        if (imagePaths == null)
+            // RED_FLAG: seems to always be null...
+            imagePaths = getPaths("/images");   // read paths to image files
+        try{                                                                                            //try catch block necessary for reading images
+            ClassLoader classLoader = getClass().getClassLoader();                                          //idk what this code does
+         
+            String pathName = Paths.get("images", imagePaths.get(i-1).getFileName().toString()).toString();
+            LogManager.getLogger(TownOfWinchester.SHORT).info(pathName);
+            URL url = classLoader.getResource(pathName);       //pulls an image from imagePaths list at location i
+            image = ImageIO.read(url);                                                                        //reads the previously pulled file
+            image = new BufferedImage(image.getWidth(), image.getHeight(), BufferedImage.TYPE_INT_ARGB);    //constructor for BufferedImage class that sets image to the proper size and type
+            
+            
+        }catch(IOException e){                                                                          //catches the excpetion
+            System.out.println("Error: " + e);
+        }
+        
+    }
+    public void paintComponent(Graphics g, int i, int j){
+        g.drawImage(image, i, j, null);               //Numbers temporary until I figure out how to access c.gridx/y for the temp Pictures
+    }
 
-     File f = new File(classLoader.getResource("images/" + imagePaths.get(i-1)).getFile());       //pulls an image from imagePaths list at location i
-     image = ImageIO.read(f);                                                                        //reads the previously pulled file
-     image = new BufferedImage(image.getWidth(), image.getHeight(), BufferedImage.TYPE_INT_ARGB);    //constructor for BufferedImage class that sets image to the proper size and type
-     
-
-     }catch(IOException e){                                                                          //catches the excpetion
-          System.out.println("Error: " + e);
-     }
-
- }
- public void paintComponent(Graphics g, int i, int j){
-     g.drawImage(image, i, j, null);               //Numbers temporary until I figure out how to access c.gridx/y for the temp Pictures
- }
- 
-     /**
+    /**
      * Read all file paths from directory and return them as a {@link java.util.List}.
      * Precondition: directory is not null, not empty, and must start with '/'.
      *
@@ -72,7 +70,7 @@ private final java.util.List<Path> imagePaths;  // List of all character images
      */
     private java.util.List<Path> getPaths(String directory) {
         assert directory != null && directory.length() > 0 && directory.charAt(0) == '/'
-            : String.format("\"%s\" is null, or empty, or doesn't start with '/'", directory);
+        : String.format("\"%s\" is null, or empty, or doesn't start with '/'", directory);
         LogManager.getLogger(TownOfWinchester.SHORT)
             .info("getPaths(\"{}\") =", directory);
         final java.util.List<Path> paths = new ArrayList<Path>();
@@ -96,5 +94,5 @@ private final java.util.List<Path> imagePaths;  // List of all character images
             .info("{}.size() ({} files)", paths, paths.size());
         return paths;
     }
- 
+    
 }
