@@ -17,7 +17,7 @@ import java.io.*;
 public class Message{  
     public static enum Type {CHAT, MCHAT, JOIN, PICK, TIME, MVOTE, VOTE};
     private Type type;
-    private String name;
+    private int ID;
     private String text;
 
     /** 
@@ -42,28 +42,28 @@ public class Message{
         for (Type type : Type.values())
             if (type.toString().equals(parts[0].toUpperCase())) {
                 this.type = type;
-                this.name = parts[1];
+                this.ID = parts[1];
                 this.text = parts[2];
                 for (int i = 3; i < parts.length; i++)
                     this.text += ":" + parts[i];
             }
-        assert this.type != null && this.name != null && this.text != null
+        assert this.type != null && this.ID != null && this.text != null
         : "String message parse failed";
         LogManager.getLogger(TownOfWinchester.SHORT).debug("Message({})", toString());
     }
 
-    public Message(Type type, String name, String text) {
+    public Message(Type type, int ID, String text) {
         this.type = type;
-        this.name = name;
+        this.ID = ID;
         this.text = text;
     }
 
     public Type getType() { return type; }
-    public String getName() { return name; }
+    public int getID() { return name; }
     public String getText() { return text; }
 
     public String toString() {
-        return type.toString() + ":" + name + ":" + text;
+        return type.toString() + ":" + ID + ":" + text;
     }
 
     // RED_FLAG: obsolete methods
